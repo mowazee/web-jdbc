@@ -33,7 +33,7 @@ public class RegisterController extends HttpServlet {
 				}
 			}
 		}
-		req.getRequestDispatcher("/views/register.jsp").forward(req, resp);
+		req.getRequestDispatcher("/views/auth/register.jsp").forward(req, resp);
 	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

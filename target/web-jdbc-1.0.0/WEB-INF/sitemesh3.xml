@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sitemesh>
-<mapping path="/*" name="web" decorator="client.jsp"/>
-<mapping path="/admin/*" name="admin" decorator="admin.jsp"/>
-<!-- Exclude path from decoration. -->
-<mapping path="/api*" exclude="true"/>
+    <mapping>
+        <path>/admin/*</path>
+        <decorator>/WEB-INF/decorators/admin.jsp</decorator>
+    </mapping>
+    <mapping>
+        <path>/*</path>
+        <decorator>/WEB-INF/decorators/client.jsp</decorator>
+    </mapping>
 </sitemesh>

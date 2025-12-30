@@ -7,43 +7,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><c:out value="${pageTitle != null ? pageTitle : 'Admin - Web Bán Gạo'}"/></title>
 
-    <!-- Bootstrap 3/4 styles may be used in admin area; include compatible CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
     <style>
-        .sidenav { background-color:#f5f5f5; padding:15px; min-height:400px; }
+        /* Đảm bảo nội dung không bị dính sát vào mép màn hình */
+        .main-content { padding: 20px 0; min-height: 500px; }
     </style>
 </head>
 <body>
 
-    <%-- Admin header/nav --%>
+    <%-- 1. Admin header --%>
     <jsp:include page="/common/admin/header.jsp" />
 
-    <div class="container-fluid">
+    <%-- 2. Main Body Content --%>
+    <div class="container">
         <div class="row">
-            <div class="col-sm-3">
-                <jsp:include page="/common/admin/left.jsp" />
-            </div>
-
-            <div class="col-sm-9 main">
-                <%-- Content JSP passed via request attribute 'body' --%>
+            <div class="col-sm-12 main-content">
                 <c:choose>
                     <c:when test="${not empty body}">
                         <jsp:include page="${body}" />
                     </c:when>
                     <c:otherwise>
-                        <h3>Trang quản trị</h3>
-                        <p>Chọn mục để quản lý.</p>
+                        <div class="jumbotron">
+                            <h3>Trang quản trị</h3>
+                            <p>Chào mừng bạn đến với hệ thống quản lý bán gạo.</p>
+                        </div>
                     </c:otherwise>
                 </c:choose>
             </div>
         </div>
     </div>
 
+    <%-- 3. Footer --%>
     <jsp:include page="/common/admin/footer.jsp" />
 
-    <!-- jQuery + Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js"></script>
 </body>

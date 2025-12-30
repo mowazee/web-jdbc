@@ -1,0 +1,15 @@
+--- 2025-12-29T01:02:09.317334100+07:00[Asia/Saigon] ---
+[CategoryDAOImpl] insert called: name='Test danh mục 111', icon='22f045dc-db2e-4a0a-b4bf-cedaf283e63a.jpg'
+[CategoryDAOImpl] insert returned id=9
+--- 2025-12-29T01:02:57.067768900+07:00[Asia/Saigon] ---
+[CategoryDAOImpl] insert called: name='Không rõ gì', icon=''
+[CategoryDAOImpl] insert returned id=10
+--- 2025-12-29T01:03:26.898115500+07:00[Asia/Saigon] ---
+[CategoryDAOImpl] insert called: name='Hẹ hẹ, xong rồi', icon=''
+[CategoryDAOImpl] insert returned id=11
+--- 2025-12-29T01:05:09.126904700+07:00[Asia/Saigon] ---
+[CategoryDAOImpl] insert called: name='Nhóm 1', icon='9e240ec9-f3f8-4d53-aeed-a92ff14eb232.jpg'
+[CategoryDAOImpl] insert returned id=12
+--- 2025-12-30T20:57:20.550266500+07:00[Asia/Saigon] ---
+[CategoryDAOImpl] insert called: name='Danh mục test 30/12', icon='null'
+[CategoryDAOImpl] insert returned id=13

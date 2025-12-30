@@ -1,19 +1,20 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
-<%@ taglib prefix="sitemesh" uri="http://www.opensymphony.net/sitemesh/decorator" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!doctype html>
 <html lang="vi">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><sitemesh:write property="title"/>Admin</title>
+    <meta name="description" content="Admin Dashboard"/>
+    <meta name="author" content="Han Trinh"/>
+    
+    <title><sitemesh:write property="title"/> - Admin</title>
 
-    <!-- Bootstrap 5 CSS -->
+    <!-- CSS Dependencies -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-      /* Full-height wrapper to keep footer at bottom */
+      /* Full-height wrapper */
       html, body { height: 100%; margin: 0; }
       .wrapper { display: flex; flex-direction: column; min-height: 100vh; }
       .main { flex: 1 0 auto; }
@@ -32,30 +33,30 @@
       }
     </style>
 
-    <!-- Allow pages to add extra head content -->
+    <!-- Allows pages to add head content -->
     <sitemesh:write property="head"/>
   </head>
   <body>
     <div class="wrapper">
-
-      <!-- Header (common) -->
+      <!-- Header -->
       <header>
         <%@ include file="/common/admin/header.jsp" %>
       </header>
 
-      <!-- Main area -->
+      <!-- Main content -->
       <main class="main">
         <div class="container-fluid">
-          <div class="row g-0">
+          <div class="row">
 
             <!-- Sidebar -->
             <aside class="col-12 col-md-3 col-lg-2 sidebar">
               <%@ include file="/common/admin/left.jsp" %>
             </aside>
 
-            <!-- Content -->
+            <!-- Content area -->
             <section class="col-12 col-md-9 col-lg-10 content-area">
               <div class="container-fluid">
+                <!-- Inject content from child pages -->
                 <sitemesh:write property="body"/>
               </div>
             </section>
@@ -64,14 +65,13 @@
         </div>
       </main>
 
-      <!-- Footer (common) -->
+      <!-- Footer -->
       <footer class="mt-auto">
         <%@ include file="/common/admin/footer.jsp" %>
       </footer>
-
     </div>
 
-    <!-- Bootstrap JS -->
+    <!-- JS Dependencies -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
