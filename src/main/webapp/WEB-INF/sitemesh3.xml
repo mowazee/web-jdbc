@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sitemesh>
+    <excludes path="/login"/> 
+    <excludes path="/register"/>
+    <excludes path="/forgotpassword"/>
     <mapping path="/admin/*" decorator="admin.jsp"/>
     <mapping path="/*" decorator="client.jsp"/>
-    <excludes path="/login.jsp"/>
 </sitemesh>
