@@ -11,4 +11,6 @@ public interface INewService {
     int save(NewModel news) throws Exception;
     boolean update(NewModel news) throws Exception;
     boolean delete(int id) throws Exception;
+
+    List<NewModel> findTopViewed(int limit) throws Exception; // new
 }

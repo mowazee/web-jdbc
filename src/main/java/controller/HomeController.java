@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet(urlPatterns = {"/home", "/index", "/about", "/contact"})
+@WebServlet(urlPatterns = {"/home", "/index", "/about", "/contact", "/profile"})
 public class HomeController extends HttpServlet {
 private static final long serialVersionUID = 1L;
 @Override
@@ -22,6 +22,9 @@ protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Se
             break;
         case "/contact":
             req.getRequestDispatcher("/views/client/contact.jsp").forward(req, resp);
+            break;
+        case "/profile":
+            req.getRequestDispatcher("/views/client/user-profile.jsp").forward(req, resp);
             break;
         case "/home":
         case "/index":

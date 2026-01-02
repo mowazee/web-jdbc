@@ -45,12 +45,15 @@ public class NewsController extends HttpServlet {
                 int toIndex = Math.min(fromIndex + size, totalItems);
                 List<NewModel> pageList = (list == null || list.isEmpty()) ? java.util.Collections.emptyList() : list.subList(fromIndex, toIndex);
 
+                List<NewModel> topViewed = newService.findTopViewed(5);
+
                 req.setAttribute("newsList", pageList);
+                req.setAttribute("topViewed", topViewed);
                 req.setAttribute("currentPage", page);
                 req.setAttribute("totalPages", totalPages);
                 req.setAttribute("pageSize", size);
                 req.setAttribute("totalItems", totalItems);
-                req.getRequestDispatcher("/views/client/news/news-list.jsp").forward(req, resp);
+                req.getRequestDispatcher("/views/client/news/list-new.jsp").forward(req, resp);
             } else {
                 // detail - pathInfo like /123
                 String raw = pathInfo.startsWith("/") ? pathInfo.substring(1) : pathInfo;

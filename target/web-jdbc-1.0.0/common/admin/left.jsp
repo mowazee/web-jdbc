@@ -5,7 +5,7 @@
 <div class="admin-sidebar">
     <div class="sidebar-header mb-4">
         <h5 class="fw-bold text-uppercase text-primary">
-            <i class="fa-solid fa-user-gear me-2"></i>Hệ thống Admin
+            <i class="fa-solid fa-user-gear me-2"></i>Quản trị viên
         </h5>
         <hr>
     </div>

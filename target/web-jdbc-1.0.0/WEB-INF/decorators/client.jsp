@@ -212,13 +212,10 @@
         </div>
     </header>
 
-    <main class="container py-5">
+    <main class="container py-1">
         <div class="row justify-content-center">
-            <div class="col-12">
-                <%-- Carousel có thể được include trực tiếp vào trang home.jsp --%>
-                <div class="content-card">
+            <div class="content-card">
                     <sitemesh:write property="body"/>
-                </div>
             </div>
         </div>
     </main>

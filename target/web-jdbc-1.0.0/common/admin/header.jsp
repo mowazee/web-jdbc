@@ -41,7 +41,7 @@
       <ul class="navbar-nav ms-auto">
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle text-secondary" href="#" id="userDrop" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="fa-solid fa-circle-user me-1"></i> Chào, Admin
+            <i class="fa-solid fa-circle-user me-1"></i> Chào bạn Admin
           </a>
           <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="userDrop">
             <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user-pen me-2"></i>Hồ sơ</a></li>

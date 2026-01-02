@@ -16,7 +16,8 @@
 
     <form action="<c:url value='/admin/news'/>" method="post" enctype="multipart/form-data">
         <input type="hidden" name="action" value="save"/>
-        <input type="hidden" name="id" value="${news.id}"/>
+        <!-- send empty id when creating new to avoid treating '0' as update -->
+        <input type="hidden" name="id" value="${news.id == 0 ? '' : news.id}"/>
 
         <div class="mb-3">
             <label for="title" class="form-label">Tiêu đề</label>
@@ -31,18 +32,27 @@
             <textarea class="form-control" id="content" name="content" rows="8">${news.content}</textarea>
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="mb-3">
                     <label for="authorid" class="form-label">Author ID</label>
                     <input type="number" class="form-control" id="authorid" name="authorid" value="${news.authorid}">
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="mb-3">
-                    <label for="thumbnail" class="form-label">Thumbnail</label>
+                    <label for="thumbnail" class="form-label">Thumbnail (nhỏ)</label>
                     <input type="file" class="form-control" id="thumbnail" name="thumbnail" accept="image/*">
                     <c:if test="${not empty news.thumbnail}">
-                        <div class="mt-2"><img src="${pageContext.request.contextPath}/${news.thumbnail}" alt="" style="max-height:120px;"/></div>
+                        <div class="mt-2"><img src="${pageContext.request.contextPath}/${news.thumbnail}" alt="thumbnail" style="max-height:120px;"/></div>
+                    </c:if>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label for="image" class="form-label">Hình đầy đủ (image)</label>
+                    <input type="file" class="form-control" id="image" name="image" accept="image/*">
+                    <c:if test="${not empty news.image}">
+                        <div class="mt-2"><img src="${pageContext.request.contextPath}/${news.image}" alt="image" style="max-height:120px;"/></div>
                     </c:if>
                 </div>
             </div>

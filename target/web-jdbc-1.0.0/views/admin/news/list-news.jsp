@@ -26,7 +26,7 @@
             <th>#</th>
             <th>Tiêu đề</th>
             <th>Tác giả</th>
-            <th>Thumbnail</th>
+            <th>Hình</th>
             <th>Ngày đăng</th>
             <th>Hành động</th>
         </tr>
@@ -37,7 +37,17 @@
                 <td>${n.id}</td>
                 <td>${n.title}</td>
                 <td>${n.authorid}</td>
-                <td><c:if test="${not empty n.thumbnail}"><img src="${pageContext.request.contextPath}/${n.thumbnail}" style="height:50px;"/></c:if></td>
+                <td>
+                    <c:choose>
+                        <c:when test="${not empty n.image}">
+                            <img src="${pageContext.request.contextPath}/${n.image}" style="height:50px;"/>
+                        </c:when>
+                        <c:when test="${not empty n.thumbnail}">
+                            <img src="${pageContext.request.contextPath}/${n.thumbnail}" style="height:50px;"/>
+                        </c:when>
+                        <c:otherwise>-</c:otherwise>
+                    </c:choose>
+                </td>
                 <td>${n.createdate}</td>
                 <td>
                     <a href="<c:url value='/admin/news?action=edit&id='/>${n.id}" class="btn btn-sm btn-warning">Sửa</a>

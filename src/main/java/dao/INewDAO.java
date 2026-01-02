@@ -9,4 +9,5 @@ public interface INewDAO {
     int insert(NewModel news) throws Exception;
     boolean update(NewModel news) throws Exception;
     boolean delete(int id) throws Exception;
+    List<NewModel> findTopViewed(int limit) throws Exception; // new
 }

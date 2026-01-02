@@ -109,7 +109,7 @@ public class OrderDAOImpl implements IOrderDAO {
         try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, order.getUserid());
             ps.setDouble(2, order.getTotal());
-            ps.setString(3, "NEW");
+            ps.setInt(3, order.getStatus());
             ps.setString(4, order.getRecipientName());
             ps.setString(5, order.getRecipientPhone());
             ps.setString(6, order.getRecipientAddress());
@@ -145,7 +145,7 @@ public class OrderDAOImpl implements IOrderDAO {
         String sql = "UPDATE ORDERS SET total_amount = ?, status = ? WHERE order_id = ?";
         try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setDouble(1, order.getTotal());
-            ps.setString(2, String.valueOf(order.getStatus()));
+            ps.setInt(2, order.getStatus());
             ps.setInt(3, order.getId());
             return ps.executeUpdate() > 0;
         }

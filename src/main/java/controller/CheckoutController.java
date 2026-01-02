@@ -66,6 +66,8 @@ public class CheckoutController extends HttpServlet {
             order.setRecipientName(recipientName.trim());
             order.setRecipientPhone(recipientPhone.trim());
             order.setRecipientAddress(recipientAddress.trim());
+            // explicitly set status = 0 (NEW)
+            order.setStatus(0);
             // copy items
             for (CartItemModel it : cart.getItems()) {
                 OrderItemModel oit = new OrderItemModel();
@@ -90,7 +92,8 @@ public class CheckoutController extends HttpServlet {
                 // clear cart
                 cart.clear();
                 session.setAttribute("cart", cart);
-                resp.sendRedirect(req.getContextPath() + "/views/client/oder-succes.jsp");
+                // redirect to friendly success route with orderId
+                resp.sendRedirect(req.getContextPath() + "/order-success?orderId=" + orderId);
                 return;
             } else {
                 req.setAttribute("error", "Không thể lưu đơn hàng");

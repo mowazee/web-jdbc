@@ -1,6 +1,7 @@
 controller\HomeController.class
 controller\admin\NewsAdminController.class
 controller\admin\CategoryAdminController.class
+model\OrderItemModel.class
 utils\MailUtil.class
 model\RoleModel.class
 model\UserModel.class
@@ -30,12 +31,14 @@ model\ProductModel.class
 filters\AdminFilter.class
 model\CartItemModel.class
 filters\CategoryFilter.class
+controller\admin\HomeAdminController.class
 dao\impl\OrderDAOImpl.class
 controller\RegisterController.class
 dao\ICategoryDAO.class
 controller\WaitingController.class
 service\ICategoryService.class
 controller\LoginController.class
+model\OrderModel.class
 controller\NewsController.class
 dao\impl\CategoryDAOImpl.class
 utils\DBConnect.class

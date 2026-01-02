@@ -6,7 +6,7 @@
     <title>Quản lý danh mục</title>
 </head>
 <body>
-<div class="container mt-4" style="max-width:760px;">
+<div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h3>Danh mục</h3>
         <a href="<c:url value='/admin/category?action=create'/>" class="btn btn-primary">Tạo mới</a>

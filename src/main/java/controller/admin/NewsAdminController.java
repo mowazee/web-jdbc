@@ -74,28 +74,51 @@ public class NewsAdminController extends HttpServlet {
                 news.setPreview(summary);
                 news.setContent(content);
                 news.setAuthorid(authorid);
-                news.setCreatedate(new Date(System.currentTimeMillis()));
+                // do not set createdate here; set it only when creating new record
 
                 Part filePart = null;
+                Part imagePart = null;
                 try { filePart = req.getPart("thumbnail"); } catch (IllegalStateException ise) { filePart = null; }
-                if (idStr == null || idStr.isEmpty()) {
+                try { imagePart = req.getPart("image"); } catch (IllegalStateException ise) { imagePart = null; }
+
+                // parse id safely and treat id <= 0 as create
+                int id = 0;
+                try { if (idStr != null && !idStr.isEmpty()) id = Integer.parseInt(idStr); } catch (NumberFormatException nfe) { id = 0; }
+
+                if (id <= 0) {
                     // create
+                    news.setCreatedate(new Date(System.currentTimeMillis()));
                     if (filePart != null && filePart.getSize() > 0) {
                         String thumb = saveUploadedFile(filePart, req);
                         news.setThumbnail(thumb);
+                    }
+                    if (imagePart != null && imagePart.getSize() > 0) {
+                        String img = saveUploadedFile(imagePart, req);
+                        news.setImage(img);
                     }
                     int newId = newService.save(news);
                     if (newId > 0) { resp.sendRedirect(req.getContextPath() + "/admin/news"); return; }
                     else req.setAttribute("error","Không thể tạo tin");
                 } else {
-                    int id = Integer.parseInt(idStr);
+                    // update
                     news.setId(id);
+                    // load existing once
+                    NewModel ex = newService.findById(id);
+                    if (ex != null) {
+                        // preserve original createdate when updating
+                        news.setCreatedate(ex.getCreatedate());
+                    }
                     if (filePart != null && filePart.getSize() > 0) {
                         String thumb = saveUploadedFile(filePart, req);
                         news.setThumbnail(thumb);
                     } else {
-                        NewModel ex = newService.findById(id);
                         if (ex != null) news.setThumbnail(ex.getThumbnail());
+                    }
+                    if (imagePart != null && imagePart.getSize() > 0) {
+                        String img = saveUploadedFile(imagePart, req);
+                        news.setImage(img);
+                    } else {
+                        if (ex != null) news.setImage(ex.getImage());
                     }
                     boolean ok = newService.update(news);
                     if (ok) { resp.sendRedirect(req.getContextPath() + "/admin/news"); return; }

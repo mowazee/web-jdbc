@@ -34,4 +34,9 @@ public class NewServiceImpl implements INewService {
     public boolean delete(int id) throws Exception {
         return newDAO.delete(id);
     }
+
+    @Override
+    public List<NewModel> findTopViewed(int limit) throws Exception {
+        return newDAO.findTopViewed(limit);
+    }
 }
