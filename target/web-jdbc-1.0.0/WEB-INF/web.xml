@@ -4,20 +4,24 @@
 	version="6.0">
 	 <display-name>My Web</display-name>
     <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
         <welcome-file>home.jsp</welcome-file>
         <welcome-file>login.jsp</welcome-file>
 	</welcome-file-list>
-    <!-- Commented out SiteMesh filter temporarily to debug 404/startup issues on Tomcat 10 (Jakarta namespace mismatch)
-    <filter>
-    	<filter-name>sitemesh3</filter-name>
-    	<filter-class>org.sitemesh.config.ConfigurableSiteMeshFilter</filter-class>
+	<filter>
+	    <filter-name>sitemesh</filter-name>
+	    <filter-class>org.sitemesh.config.ConfigurableSiteMeshFilter</filter-class>
 	</filter>
-
+	
 	<filter-mapping>
-    	<filter-name>sitemesh3</filter-name>
-    	<url-pattern>/*</url-pattern>
+	    <filter-name>sitemesh</filter-name>
+	    <url-pattern>/*</url-pattern>
+	    <dispatcher>REQUEST</dispatcher>
+	    <dispatcher>FORWARD</dispatcher>
 	</filter-mapping>
-    -->
 
+	<!-- Custom 404 mapping: forward to views/client/web404.jsp for not found -->
+	<error-page>
+	    <error-code>404</error-code>
+	    <location>/views/auth/web404.jsp</location>
+	</error-page>
 </web-app>

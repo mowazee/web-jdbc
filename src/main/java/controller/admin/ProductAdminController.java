@@ -24,7 +24,7 @@ import service.impl.ProductServiceImpl;
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, // 1MB
         maxFileSize = 5 * 1024 * 1024, // 5MB
         maxRequestSize = 10 * 1024 * 1024)
-@WebServlet(urlPatterns = { "/admin/product" })
+@WebServlet(urlPatterns = { "/admin/products","/admin/product" })
 public class ProductAdminController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private IProductService productService = new ProductServiceImpl();

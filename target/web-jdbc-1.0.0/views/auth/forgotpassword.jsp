@@ -5,76 +5,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Quên Mật Khẩu</title>
-    <!-- Bootstrap CSS -->
+    <title>Quên Mật Khẩu - HT Store</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
-        html, body { height: 100%; }
         body {
-            background-color: #eef2f7;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            margin: 0;
-            padding: 0;
-        }
-        .fp-wrapper {
             min-height: 100vh;
             display: flex;
-            align-items: center;
             justify-content: center;
-            padding: 30px 15px;
+            align-items: center;
+            /* Đồng bộ ảnh nền với trang Login/Register */
+            background: url('https://images.unsplash.com/photo-1615715874955-59fca38a3515?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
         }
-        .fp-card { border-radius: 12px; max-width: 520px; }
-        .form-control:focus { box-shadow: 0 0 0 0.2rem rgba(13,110,253,.12); }
+
+        .fp-card {
+            /* Hiệu ứng kính mờ Glassmorphism */
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 450px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .fp-card h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #444;
+        }
+
+        .form-control {
+            border-radius: 10px;
+            height: 48px;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .form-control:focus {
+            box-shadow: 0 0 0 0.25rem rgba(165, 94, 234, 0.15);
+            border-color: #a55eea;
+        }
+
+        .btn-submit {
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+            /* Gradient đồng bộ trang Login */
+            background: linear-gradient(90deg, #a55eea, #ff79c6);
+            color: #fff;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .btn-submit:hover {
+            background: linear-gradient(90deg, #ff79c6, #a55eea);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(165, 94, 234, 0.3);
+            color: white;
+        }
+
+        .btn-back {
+            border-radius: 10px;
+            padding: 10px;
+            font-weight: 600;
+        }
+
+        .instruction-text {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: #666;
+            margin-bottom: 25px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
 
-<div class="fp-wrapper">
-    <div class="container-fluid">
-        <div class="d-flex justify-content-center w-100">
-            <div class="w-100" style="max-width:520px;">
-                <div class="card fp-card shadow-sm">
-                    <div class="card-header bg-primary text-white text-center py-3">
-                        <h5 class="mb-0"><i class="fas fa-key me-2"></i> Quên Mật Khẩu</h5>
-                    </div>
-                    <div class="card-body p-4">
+<div class="fp-card shadow-lg">
+    <h2><i class="fas fa-key me-2 text-primary"></i>Quên mật khẩu</h2>
 
-                        <%-- show success or error messages --%>
-                        <c:if test="${not empty requestScope.error}">
-                            <div class="alert alert-danger" role="alert">${requestScope.error}</div>
-                        </c:if>
-                        <c:if test="${not empty requestScope.message}">
-                            <div class="alert alert-success" role="alert">${requestScope.message}</div>
-                        </c:if>
+    <%-- Hiển thị thông báo --%>
+    <c:if test="${not empty requestScope.error}">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-triangle me-2"></i>${requestScope.error}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </c:if>
+    <c:if test="${not empty requestScope.message}">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle me-2"></i>${requestScope.message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </c:if>
 
-                        <p class="text-muted">Nhập địa chỉ email của bạn. Chúng tôi sẽ gửi một liên kết để đặt lại mật khẩu.</p>
+    <p class="instruction-text">
+        Nhập địa chỉ email đăng ký của bạn. Chúng tôi sẽ gửi một liên kết để bạn có thể đặt lại mật khẩu mới.
+    </p>
 
-                        <form action="<c:url value='/forgotpassword'/>" method="post">
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email đăng ký</label>
-                                <input type="email" class="form-control" id="email" name="email" placeholder="nhập email của bạn" required value="${param.email}">
-                            </div>
-
-                            <div class="d-grid gap-2">
-                                <button type="submit" class="btn btn-primary btn-lg">Gửi liên kết đặt lại</button>
-                                <a href="<c:url value='/login'/>" class="btn btn-outline-secondary">Quay lại Đăng nhập</a>
-                            </div>
-                        </form>
-
-                        <hr class="my-3">
-                        <p class="small text-center text-muted mb-0">Nếu bạn không nhận được email, kiểm tra hộp thư rác hoặc thử lại sau vài phút.</p>
-                    </div>
-                </div>
+    <form action="<c:url value='/forgotpassword'/>" method="post">
+        <div class="mb-4">
+            <label for="email" class="form-label">Email đăng ký</label>
+            <div class="input-group">
+                <span class="input-group-text bg-white border-end-0" style="border-radius: 10px 0 0 10px;">
+                    <i class="fas fa-envelope text-muted"></i>
+                </span>
+                <input type="email" class="form-control border-start-0" id="email" name="email" 
+                       style="border-radius: 0 10px 10px 0;"
+                       placeholder="vi-du@gmail.com" required value="${param.email}">
             </div>
         </div>
+
+        <div class="d-grid gap-3">
+            <button type="submit" class="btn btn-submit shadow">
+                <i class="fas fa-paper-plane me-2"></i>Gửi liên kết đặt lại
+            </button>
+            <a href="<c:url value='/login'/>" class="btn btn-outline-secondary btn-back">
+                <i class="fas fa-arrow-left me-2"></i>Quay lại Đăng nhập
+            </a>
+        </div>
+    </form>
+
+    <div class="mt-4 pt-3 border-top text-center">
+        <p class="small text-muted mb-0">
+            Kiểm tra hộp thư rác (Spam) nếu bạn không thấy email trong hộp thư đến.
+        </p>
     </div>
 </div>
 
-<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

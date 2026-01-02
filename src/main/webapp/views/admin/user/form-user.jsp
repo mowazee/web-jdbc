@@ -6,7 +6,7 @@
     <title>Form người dùng</title>
 </head>
 <body>
-<div class="container mt-4" style="max-width:820px;">
+<div class="container mt-4" style="max-width:620px;">
     <h3>${user.id == 0 ? 'Tạo mới người dùng' : 'Chỉnh sửa người dùng'}</h3>
 
     <c:if test="${not empty requestScope.error}">
@@ -33,7 +33,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="roleid" class="form-label">Role ID</label>
-                    <input type="number" class="form-control" id="roleid" name="roleid" value="${user.roleid == 0 ? 3 : user.roleid}">
+                    <input type="number" class="form-control" id="roleid" name="roleid" value="${user.roleid == 0 ? 2 : user.roleid}">
                 </div>
             </div>
             <div class="col-md-6">

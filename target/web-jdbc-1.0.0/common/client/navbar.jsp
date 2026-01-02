@@ -2,23 +2,87 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
-<!-- Navbar fragment for product categories and quick links -->
-<div class="container mt-3">
-    <ul class="nav nav-pills justify-content-center" role="tablist">
-        <li class="nav-item">
-            <a class="nav-link" href="<c:url value='/products'/>">Tất cả sản phẩm</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="<c:url value='/products/category?id=1'/>">Gạo ST24</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="<c:url value='/products/category?id=2'/>">Gạo Tám Thơm</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="<c:url value='/products/category?id=3'/>">Gạo Nếp</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="<c:url value='/products/special'/>">Combo Quà Tặng</a>
-        </li>
-    </ul>
+<div class="container">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-light rounded-3 shadow-sm">
+    <div class="container-fluid">
+      <a class="navbar-brand d-lg-none" href="${pageContext.request.contextPath}/home">Menu</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link text-secondary" href="${pageContext.request.contextPath}/home">Trang chủ</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-secondary" href="${pageContext.request.contextPath}/about">Giới thiệu</a>
+          </li>
+
+          <!-- Sản phẩm dropdown: use categories if provided -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-secondary" href="#" id="productDrop" role="button" data-bs-toggle="dropdown" aria-expanded="false">Sản phẩm</a>
+            <ul class="dropdown-menu" aria-labelledby="productDrop">
+              <c:choose>
+                <c:when test="${not empty categories}">
+                  <c:forEach var="c" items="${categories}">
+                    <li><a class="dropdown-item" href="${pageContext.request.contextPath}/products/category?id=${c.cateid}"><c:out value="${c.catename}"/></a></li>
+                  </c:forEach>
+                </c:when>
+                <c:otherwise>
+                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/products/category?id=1">Hải Sản Khô</a></li>
+                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/products/category?id=2">Trái Cây Sấy</a></li>
+                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/products/category?id=3">Bánh Kẹo Đặc Sản</a></li>
+                </c:otherwise>
+              </c:choose>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link text-secondary" href="${pageContext.request.contextPath}/news">Tin tức</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-secondary" href="${pageContext.request.contextPath}/contact">Liên hệ</a>
+          </li>
+        </ul>
+
+        <!-- Search (center/right) -->
+        <form class="d-flex mx-3" action="${pageContext.request.contextPath}/products" method="get">
+          <input name="q" class="form-control form-control-sm me-2" type="search" placeholder="Tìm kiếm sản phẩm..." aria-label="Tìm kiếm">
+          <button class="btn btn-light btn-sm" type="submit"><i class="fa fa-search text-primary"></i></button>
+        </form>
+
+        <!-- Right: Login/Register and Cart (moved from header) -->
+        <ul class="navbar-nav ms-auto d-flex align-items-center">
+          <c:if test="${empty sessionScope.username}">
+            <li class="nav-item me-2">
+              <a class="btn btn-light btn-sm text-secondary fw-bold" href="${pageContext.request.contextPath}/login">Đăng nhập</a>
+            </li>
+          </c:if>
+
+          <c:if test="${not empty sessionScope.username}">
+            <li class="nav-item dropdown me-2">
+              <a class="btn btn-outline-light btn-sm dropdown-toggle text-dark" href="#" id="userDropNav" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Chào bạn <c:out value="${sessionScope.user != null ? sessionScope.user.fullname : sessionScope.username}"/>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="userDropNav">
+                <li><a class="dropdown-item" href="${pageContext.request.contextPath}/profile"><i class="fa-solid fa-id-card me-2"></i>Hồ sơ</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item text-danger" href="${pageContext.request.contextPath}/logout"><i class="fa-solid fa-right-from-bracket me-2"></i>Đăng xuất</a></li>
+              </ul>
+            </li>
+          </c:if>
+
+          <li class="nav-item">
+            <a class="btn btn-warning btn-sm text-dark fw-bold" href="${pageContext.request.contextPath}/cart">
+              <i class="fa-solid fa-cart-shopping me-1"></i>Giỏ hàng
+              <c:if test="${not empty sessionScope.cart}">
+                <span id="cart-badge" class="badge bg-danger ms-2">${sessionScope.cart.totalQuantity}</span>
+              </c:if>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 </div>

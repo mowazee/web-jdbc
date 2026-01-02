@@ -48,7 +48,7 @@
     </table>
 
     <div class="mt-3">
-        <form action="<c:url value='/admin/order'/>" method="post">
+        <form action="<c:url value='/admin/orders'/>" method="post">
             <input type="hidden" name="action" value="updateStatus"/>
             <input type="hidden" name="id" value="${order.id}"/>
             <div class="input-group" style="max-width:360px;">
@@ -64,7 +64,7 @@
     </div>
 
     <div class="mt-3">
-        <a href="<c:url value='/admin/order'/>" class="btn btn-secondary">Quay lại</a>
+        <a href="<c:url value='/admin/orders'/>" class="btn btn-secondary">Quay lại</a>
     </div>
 </div>
 </body>

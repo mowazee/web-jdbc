@@ -13,7 +13,7 @@ import model.UserModel;
 import service.IUserService;
 import service.impl.UserServiceImpl;
 
-@WebServlet(urlPatterns = {"/admin/user"})
+@WebServlet(urlPatterns = {"/admin/users", "/admin/user"})
 public class UserAdminController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private IUserService userService = new UserServiceImpl();
@@ -116,5 +116,6 @@ public class UserAdminController extends HttpServlet {
             e.printStackTrace();
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
+        
     }
 }

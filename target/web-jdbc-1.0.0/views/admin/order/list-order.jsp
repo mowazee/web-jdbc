@@ -1,12 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
-<!DOCTYPE html>
-<html>
+
 <head>
     <meta charset="UTF-8">
     <title>Quản lý đơn hàng</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body>
 <div class="container mt-4">
     <h3>Đơn hàng</h3>
@@ -39,8 +38,8 @@
                     </c:choose>
                 </td>
                 <td>
-                    <a href="<c:url value='/admin/order?action=detail&id='/>${o.id}" class="btn btn-sm btn-info">Chi tiết</a>
-                    <form action="<c:url value='/admin/order'/>" method="post" style="display:inline-block;" onsubmit="return confirm('Bạn có chắc muốn xóa?');">
+                    <a href="<c:url value='/admin/orders?action=detail&id='/>${o.id}" class="btn btn-sm btn-info">Chi tiết</a>
+                    <form action="<c:url value='/admin/orders'/>" method="post" style="display:inline-block;" onsubmit="return confirm('Bạn có chắc muốn xóa?');">
                         <input type="hidden" name="action" value="delete"/>
                         <input type="hidden" name="id" value="${o.id}"/>
                         <button type="submit" class="btn btn-sm btn-danger">Xóa</button>
@@ -51,6 +50,4 @@
         </tbody>
     </table>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-</html>

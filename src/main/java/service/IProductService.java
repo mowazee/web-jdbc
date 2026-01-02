@@ -16,4 +16,21 @@ public interface IProductService {
     boolean update(ProductModel product) throws Exception;
 
     boolean delete(int id) throws Exception;
+
+    // Search products by name containing keyword
+    List<ProductModel> searchByName(String keyword) throws Exception;
+
+    // Pagination support
+    List<ProductModel> findAllPaged(int offset, int limit) throws Exception;
+
+    List<ProductModel> findByCategoryPaged(int cateid, int offset, int limit) throws Exception;
+
+    List<ProductModel> searchByNamePaged(String keyword, int offset, int limit) throws Exception;
+
+    // Counts
+    int countAll() throws Exception;
+
+    int countByCategory(int cateid) throws Exception;
+
+    int countBySearch(String keyword) throws Exception;
 }

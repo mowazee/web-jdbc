@@ -8,11 +8,11 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.OderModel;
+import model.OrderModel;
 import service.IOrderService;
 import service.impl.OrderServiceImpl;
 
-@WebServlet(urlPatterns = {"/admin/order"})
+@WebServlet(urlPatterns = {"/admin/orders", "/admin/order"})
 public class OrderAdminController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private IOrderService orderService = new OrderServiceImpl();
@@ -22,7 +22,7 @@ public class OrderAdminController extends HttpServlet {
         try {
             String action = req.getParameter("action");
             if (action == null || action.isEmpty()) {
-                List<OderModel> orders = orderService.findAll();
+                List<OrderModel> orders = orderService.findAll();
                 req.setAttribute("orders", orders);
                 req.getRequestDispatcher("/views/admin/order/list-order.jsp").forward(req, resp);
                 return;
@@ -30,7 +30,7 @@ public class OrderAdminController extends HttpServlet {
             switch (action) {
                 case "detail":
                     int id = Integer.parseInt(req.getParameter("id"));
-                    OderModel order = orderService.findById(id);
+                    OrderModel order = orderService.findById(id);
                     req.setAttribute("order", order);
                     req.getRequestDispatcher("/views/admin/order/order-detail.jsp").forward(req, resp);
                     break;
@@ -51,17 +51,18 @@ public class OrderAdminController extends HttpServlet {
             if ("updateStatus".equals(action)) {
                 int id = Integer.parseInt(req.getParameter("id"));
                 int status = Integer.parseInt(req.getParameter("status"));
-                OderModel order = orderService.findById(id);
+                OrderModel order = orderService.findById(id);
                 if (order != null) {
                     order.setStatus(status);
                     orderService.update(order);
                 }
-                resp.sendRedirect(req.getContextPath() + "/admin/order");
+                // normalize redirect to the plural /admin/orders (matches sidebar link)
+                resp.sendRedirect(req.getContextPath() + "/admin/orders");
                 return;
             } else if ("delete".equals(action)) {
                 int id = Integer.parseInt(req.getParameter("id"));
                 orderService.delete(id);
-                resp.sendRedirect(req.getContextPath() + "/admin/order");
+                resp.sendRedirect(req.getContextPath() + "/admin/orders");
                 return;
             } else {
                 resp.sendError(HttpServletResponse.SC_NOT_FOUND);

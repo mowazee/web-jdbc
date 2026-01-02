@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>Quản lý đơn hàng</title>
 </head>
+
 <body>
 <div class="container mt-4">
     <h3>Đơn hàng</h3>
@@ -37,8 +38,8 @@
                     </c:choose>
                 </td>
                 <td>
-                    <a href="<c:url value='/admin/order?action=detail&id='/>${o.id}" class="btn btn-sm btn-info">Chi tiết</a>
-                    <form action="<c:url value='/admin/order'/>" method="post" style="display:inline-block;" onsubmit="return confirm('Bạn có chắc muốn xóa?');">
+                    <a href="<c:url value='/admin/orders?action=detail&id='/>${o.id}" class="btn btn-sm btn-info">Chi tiết</a>
+                    <form action="<c:url value='/admin/orders'/>" method="post" style="display:inline-block;" onsubmit="return confirm('Bạn có chắc muốn xóa?');">
                         <input type="hidden" name="action" value="delete"/>
                         <input type="hidden" name="id" value="${o.id}"/>
                         <button type="submit" class="btn btn-sm btn-danger">Xóa</button>

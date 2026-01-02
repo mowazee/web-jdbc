@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
   <div class="container-fluid">
     <a class="navbar-brand fw-bold" href="${pageContext.request.contextPath}/admin/home">
-      <i class="fa-solid fa-wheat-awn text-warning me-2"></i>ADMIN GẠO
+      <i class="fa-solid fa-wheat-awn text-warning me-2"></i>DASHBOARD
     </a>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarAdmin" aria-controls="navbarAdmin" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,7 +27,7 @@
             <li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/category"><i class="fa-solid fa-tags me-2"></i>Danh mục</a></li>
             <li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/product"><i class="fa-solid fa-box me-2"></i>Sản phẩm</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/order"><i class="fa-solid fa-cart-shopping me-2"></i>Đơn hàng</a></li>
+            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/orders"><i class="fa-solid fa-cart-shopping me-2"></i>Đơn hàng</a></li>
           </ul>
         </li>
         
@@ -40,8 +40,8 @@
 
       <ul class="navbar-nav ms-auto">
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle text-light" href="#" id="userDrop" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="fa-solid fa-circle-user me-1"></i> Chào, Admin
+          <a class="nav-link dropdown-toggle text-secondary" href="#" id="userDrop" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fa-solid fa-circle-user me-1"></i> Chào bạn Admin
           </a>
           <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="userDrop">
             <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user-pen me-2"></i>Hồ sơ</a></li>

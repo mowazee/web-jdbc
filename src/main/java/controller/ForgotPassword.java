@@ -3,14 +3,13 @@ package controller;
 import java.io.IOException;
 import java.util.UUID;
 
-import dao.IUserDAO;
-import dao.impl.UserDAOImpl;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.UserModel;
+import service.IUserService;
+import utils.MailUtil;
 
 @WebServlet(urlPatterns = "/forgotpassword")
 public class ForgotPassword extends HttpServlet {
@@ -38,19 +37,36 @@ public class ForgotPassword extends HttpServlet {
         }
 
         try {
-            IUserDAO userDao = new UserDAOImpl();
-            UserModel user = userDao.findByEmail(email.trim());
-            // Generate token regardless; do not reveal whether email exists
+            IUserService userService = new service.impl.UserServiceImpl();
+            // generate token and expiry
             String token = UUID.randomUUID().toString();
-            // In a real app: persist the token with expiry and send email with reset link containing token.
-            if (user != null) {
-                // Here we simply log the token for testing.
-                System.out.println("[ForgotPassword] Reset token for user '" + user.getUsername() + "' (email=" + email + "): " + token);
+            long expiryMillis = System.currentTimeMillis() + (60L * 60L * 1000L); // 1 hour
+            // set token if email exists (silent if not)
+            boolean updated = userService.setResetTokenByEmail(email.trim(), token, expiryMillis);
+
+            // build reset link
+            String resetLink = req.getScheme() + "://" + req.getServerName()
+                    + ( req.getServerPort() == 80 || req.getServerPort() == 443 ? "" : (":" + req.getServerPort()) )
+                    + req.getContextPath() + "/resetpassword?token=" + token;
+
+            if (updated) {
+                // send email
+                try {
+                    String subject = "Đặt lại mật khẩu - " + req.getServerName();
+                    String html = "<p>Xin chào,</p>"
+                            + "<p>Yêu cầu đặt lại mật khẩu đã được gửi cho tài khoản này. Nếu bạn yêu cầu, vui lòng click liên kết bên dưới để đặt mật khẩu mới. Liên kết có hiệu lực 1 giờ.</p>"
+                            + "<p><a href=\"" + resetLink + "\">Đặt lại mật khẩu</a></p>"
+                            + "<p>Nếu bạn không yêu cầu, hãy bỏ qua email này.</p>";
+                    MailUtil.sendActivationEmail(email.trim(), subject, html);
+                } catch (Exception mailEx) {
+                    mailEx.printStackTrace();
+                    // Do not reveal to user; log only.
+                }
             } else {
-                // Log attempt for non-existing email as well (no info leak to user)
-                System.out.println("[ForgotPassword] Requested reset for non-registered email: " + email + "; generated token: " + token);
+                // email not found or update failed: we still pretend success
             }
-            message = "Nếu email tồn tại trong hệ thống, chúng tôi đã gửi liên kết đặt lại mật khẩu (vui lòng kiểm tra hộp thư đến và spam).";
+
+            message = "Đã gửi liên kết đặt lại mật khẩu (vui lòng kiểm tra hộp thư đến và spam).";
             req.setAttribute("message", message);
             req.getRequestDispatcher("/views/auth/forgotpassword.jsp").forward(req, resp);
 

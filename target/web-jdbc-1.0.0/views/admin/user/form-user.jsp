@@ -1,14 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
-<!DOCTYPE html>
-<html>
+
 <head>
     <meta charset="UTF-8">
     <title>Form người dùng</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<div class="container mt-4" style="max-width:820px;">
+<div class="container mt-4" style="max-width:620px;">
     <h3>${user.id == 0 ? 'Tạo mới người dùng' : 'Chỉnh sửa người dùng'}</h3>
 
     <c:if test="${not empty requestScope.error}">
@@ -35,7 +33,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="roleid" class="form-label">Role ID</label>
-                    <input type="number" class="form-control" id="roleid" name="roleid" value="${user.roleid == 0 ? 3 : user.roleid}">
+                    <input type="number" class="form-control" id="roleid" name="roleid" value="${user.roleid == 0 ? 2 : user.roleid}">
                 </div>
             </div>
             <div class="col-md-6">
@@ -60,6 +58,4 @@
         </div>
     </form>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-</html>

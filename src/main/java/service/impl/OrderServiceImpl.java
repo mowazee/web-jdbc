@@ -4,34 +4,34 @@ import java.util.List;
 
 import dao.IOrderDAO;
 import dao.impl.OrderDAOImpl;
-import model.OderModel;
+import model.OrderModel;
 import service.IOrderService;
 
 public class OrderServiceImpl implements IOrderService {
     private IOrderDAO orderDAO = new OrderDAOImpl();
 
     @Override
-    public OderModel findById(int id) throws Exception {
+    public OrderModel findById(int id) throws Exception {
         return orderDAO.findById(id);
     }
 
     @Override
-    public List<OderModel> findByUserId(int userid) throws Exception {
+    public List<OrderModel> findByUserId(int userid) throws Exception {
         return orderDAO.findByUserId(userid);
     }
 
     @Override
-    public List<OderModel> findAll() throws Exception {
+    public List<OrderModel> findAll() throws Exception {
         return orderDAO.findAll();
     }
 
     @Override
-    public int save(OderModel order) throws Exception {
+    public int save(OrderModel order) throws Exception {
         return orderDAO.insert(order);
     }
 
     @Override
-    public boolean update(OderModel order) throws Exception {
+    public boolean update(OrderModel order) throws Exception {
         return orderDAO.update(order);
     }
 

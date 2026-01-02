@@ -1,55 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
-  <div class="container-fluid">
-    <a class="navbar-brand fw-bold" href="${pageContext.request.contextPath}/admin/home">
-      <i class="fa-solid fa-wheat-awn text-warning me-2"></i> HT Store
-    </a>
-    
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarAdmin" aria-controls="navbarAdmin" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+<!-- Top info bar: left logo, right contact/info fields -->
+<div class="bg-white border-bottom">
+  <div class="container d-flex justify-content-between align-items-center py-2">
+    <div class="d-flex align-items-center">
+      <a class="navbar-brand fw-bold mb-0" href="${pageContext.request.contextPath}/home">
+        <i class="fa-solid fa-wheat-awn text-warning me-2"></i> HT Store
+      </a>
+    </div>
 
-    <div class="collapse navbar-collapse" id="navbarAdmin">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" href="${pageContext.request.contextPath}/admin/home">Trang chủ</a>
-        </li>
-        
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="manageDrop" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Quản lý
-          </a>
-          <ul class="dropdown-menu shadow" aria-labelledby="manageDrop">
-            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/category">Danh mục</a></li>
-            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/product">Sản phẩm</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/order">Đơn hàng</a></li>
-          </ul>
-        </li>
-        
-        <li class="nav-item">
-          <a class="nav-link" href="#">Tin tức</a>
-        </li>
-      </ul>
-
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle text-light" href="#" id="userDrop" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-             <i class="fa-solid fa-user-tie me-1"></i> Chào bạn
-          </a>
-          <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="userDrop">
-            <li><a class="dropdown-item" href="#"><i class="fa-solid fa-id-card me-2"></i>Hồ sơ</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li>
-              <a class="dropdown-item text-danger" href="${pageContext.request.contextPath}/logout">
-                <i class="fa-solid fa-right-from-bracket me-2"></i>Đăng xuất
-              </a>
-            </li>
-          </ul>
-        </li>
-      </ul>
+    <div class="d-flex align-items-center gap-4 text-muted small">
+      <div><i class="fa-solid fa-location-dot me-2 text-primary"></i>HCMUTE - TP.HCM</div>
+      <div><i class="fa-regular fa-envelope me-2 text-primary"></i>contact@htstore.vn</div>
+      <div><i class="fa-regular fa-clock me-2 text-primary"></i>08:00 - 17:00</div>
+      <div><i class="fa-solid fa-phone me-2 text-primary"></i>0912345678</div>
     </div>
   </div>
-</nav>
+</div>

@@ -56,6 +56,16 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+    public UserModel findByActivationToken(String token) throws Exception {
+        return userDAO.findByActivationToken(token);
+    }
+
+    @Override
+    public UserModel findByResetToken(String token) throws Exception {
+        return userDAO.findByResetToken(token);
+    }
+
+    @Override
     public List<UserModel> findAll() throws Exception {
         return userDAO.findAll();
     }
@@ -83,5 +93,27 @@ public class UserServiceImpl implements IUserService {
     @Override
     public boolean delete(int id) throws Exception {
         return userDAO.delete(id);
+    }
+
+    @Override
+    public boolean activate(String token) throws Exception {
+        return userDAO.activateByToken(token);
+    }
+
+    @Override
+    public boolean setResetTokenByEmail(String email, String token, long expiryMillis) throws Exception {
+        return userDAO.setResetTokenByEmail(email, token, expiryMillis);
+    }
+
+    @Override
+    public boolean clearResetToken(String token) throws Exception {
+        return userDAO.clearResetToken(token);
+    }
+
+    @Override
+    public boolean updatePasswordByResetToken(String token, String rawPassword) throws Exception {
+        // hash and delegate
+        String hashed = BCrypt.hashpw(rawPassword, BCrypt.gensalt());
+        return userDAO.updatePasswordByResetToken(token, hashed);
     }
 }

@@ -20,7 +20,7 @@ import service.ICategoryService;
 import service.impl.CategoryServiceImpl;
 import utils.Constant;
 
-@WebServlet(urlPatterns = {"/admin/category"})
+@WebServlet(urlPatterns = {"/admin/categories","/admin/category"})
 public class CategoryAdminController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private ICategoryService categoryService = new CategoryServiceImpl();

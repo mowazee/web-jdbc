@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sitemesh>
-    <excludes path="/login"/> 
-    <excludes path="/register"/>
-    <excludes path="/forgotpassword"/>
-    <mapping path="/admin/*" decorator="admin.jsp"/>
-    <mapping path="/*" decorator="client.jsp"/>
+    <!-- Exclude forwarded JSPs under /views/auth so login/register/forgotpassword aren't decorated -->
+	<!-- Exclude path from decoration. -->
+	<mapping path="/auth/*" exclude="true" />
+	<mapping path="/login*" exclude="true" />
+	<mapping path="/register*" exclude="true" />
+	<mapping path="/forgotpassword*" exclude="true" />
+    <mapping>
+        <path>/admin/*</path>
+        <decorator>admin.jsp</decorator>
+    </mapping>
+
+    <!-- Default client decorator -->
+    <mapping>
+        <path>/*</path>
+        <decorator>client.jsp</decorator>
+    </mapping>
 </sitemesh>

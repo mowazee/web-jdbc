@@ -36,10 +36,8 @@ public class LogoutController extends HttpServlet {
 			}
 		}
 
-		// 3. Redirect về trang login
-		//RequestDispatcher requestDispatcher = request.getRequestDispatcher("/login.jsp");
-		//requestDispatcher.forward(request, response);
-		response.sendRedirect(request.getContextPath() + "/views/login.jsp");
+		// Redirect to login servlet
+		response.sendRedirect(request.getContextPath() + "/home");
 	}
 
 	// Optional: nếu dùng POST

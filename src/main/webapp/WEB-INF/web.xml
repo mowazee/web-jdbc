@@ -4,7 +4,6 @@
 	version="6.0">
 	 <display-name>My Web</display-name>
     <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
         <welcome-file>home.jsp</welcome-file>
         <welcome-file>login.jsp</welcome-file>
 	</welcome-file-list>
@@ -19,4 +18,10 @@
 	    <dispatcher>REQUEST</dispatcher>
 	    <dispatcher>FORWARD</dispatcher>
 	</filter-mapping>
+
+	<!-- Custom 404 mapping: forward to views/client/web404.jsp for not found -->
+	<error-page>
+	    <error-code>404</error-code>
+	    <location>/views/auth/web404.jsp</location>
+	</error-page>
 </web-app>
