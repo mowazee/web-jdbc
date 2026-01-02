@@ -7,6 +7,6 @@
 <title>Trang chủ</title>
 </head>
 <body>
-		<h1>Welcome to HT Store</h1>
+		<h1>Welcome to WP Store</h1>
 </body>
 </html>
