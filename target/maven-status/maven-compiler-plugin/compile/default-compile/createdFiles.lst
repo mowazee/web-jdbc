@@ -1,11 +1,14 @@
+service\IReportService.class
 controller\HomeController.class
 controller\admin\NewsAdminController.class
 controller\admin\CategoryAdminController.class
 model\OrderItemModel.class
 utils\MailUtil.class
 model\RoleModel.class
+controller\OrderSuccessController.class
 model\UserModel.class
 controller\Web404Controller.class
+controller\CategoryClientController.class
 service\impl\NewServiceImpl.class
 model\NewModel.class
 model\PaymentModel.class
@@ -14,6 +17,7 @@ utils\MailUtil$1.class
 controller\CheckoutController.class
 dao\impl\UserDAOImpl.class
 controller\CartController.class
+dao\impl\ReportDAOImpl.class
 service\IUserService.class
 model\CartModel.class
 dao\INewDAO.class
@@ -25,6 +29,7 @@ controller\admin\OrderAdminController.class
 service\impl\CategoryServiceImpl.class
 service\IOrderService.class
 controller\LogoutController.class
+dao\IReportDAO.class
 utils\Constant.class
 service\impl\UserServiceImpl.class
 model\ProductModel.class
@@ -39,6 +44,7 @@ controller\WaitingController.class
 service\ICategoryService.class
 controller\LoginController.class
 model\OrderModel.class
+controller\ContactController.class
 controller\NewsController.class
 dao\impl\CategoryDAOImpl.class
 utils\DBConnect.class
@@ -51,6 +57,7 @@ service\IProductService.class
 model\CategoryModel.class
 controller\ForgotPassword.class
 dao\impl\NewDAOImpl.class
+service\impl\ReportServiceImpl.class
 controller\admin\ProductAdminController.class
 controller\ProductDetailController.class
 controller\ResetPasswordController.class

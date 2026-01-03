@@ -24,7 +24,21 @@ public class UserAdminController extends HttpServlet {
             String action = req.getParameter("action");
             if (action == null || action.isEmpty()) {
                 List<UserModel> users = userService.findAll();
-                req.setAttribute("users", users);
+                String pageParam = req.getParameter("page");
+                int page = 1;
+                int pageSize = 10;
+                try { if (pageParam != null) page = Math.max(1, Integer.parseInt(pageParam)); } catch (NumberFormatException ex) { page = 1; }
+                int totalItems = users == null ? 0 : users.size();
+                int totalPages = totalItems == 0 ? 1 : (int) Math.ceil((double) totalItems / pageSize);
+                if (page > totalPages) page = totalPages;
+                int fromIndex = (page - 1) * pageSize;
+                int toIndex = Math.min(fromIndex + pageSize, totalItems);
+                List<UserModel> pageList = (users == null || users.isEmpty()) ? java.util.Collections.emptyList() : users.subList(fromIndex, toIndex);
+                req.setAttribute("users", pageList);
+                req.setAttribute("currentPage", page);
+                req.setAttribute("totalPages", totalPages);
+                req.setAttribute("pageSize", pageSize);
+                req.setAttribute("totalItems", totalItems);
                 req.getRequestDispatcher("/views/admin/user/list-user.jsp").forward(req, resp);
                 return;
             }

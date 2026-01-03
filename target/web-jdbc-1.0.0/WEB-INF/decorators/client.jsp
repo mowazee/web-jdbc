@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -11,206 +12,37 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/client/css/basic.css">
     
+<style>
 
-    <style>
-        :root {
-            --primary-green: #1b5e20;
-            --accent-yellow: #ffb300;
-            --bg-light: #f4f7f6;
-            --glass-bg: rgba(255, 255, 255, 0.75);
-            --glass-dark: rgba(0, 0, 0, 0.5);
-            --text-main: #1a1a1a;
-            --blur-effect: blur(12px);
-        }
-        
-        html, body { height: 100%; margin: 0; background-color: var(--bg-secondary); font-family: 'Segoe UI', Roboto, sans-serif; 
-        }
-        .wrapper { display: flex; flex-direction: column; min-height: 100vh; }
-        
-        /* === 1. HEADER & NAVBAR === */
-        header { 
-            position: sticky; 
-            top: 0; 
-            z-index: 1020;
-            background: white;
-            box-shadow: 0 1px 15px rgba(0,0,0,0.08); 
-        }
-
-        /* === 2. MAIN BODY AREA === */
-        main { flex: 1 0 auto; }
-        
-        .content-card {
-            background: white;
-            border-radius:16px;
-            padding: 2.5rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
-            border: 1px solid rgba(0,0,0,0.02);
-            min-height: 70vh;
-        }
-
-        /* Hiệu ứng ảnh sản phẩm/danh mục dùng chung cho toàn web */
-        .img-hover-zoom {
-            overflow: hidden;
-            border-radius: 12px;
-            position: relative;
-        }
-        
-        .img-hover-zoom img {
-            transition: transform 0.6s cubic-bezier(0.25, 0.45, 0.45, 0.95);
-            width: 100%;
-            height: 250px; /* Tối ưu cho khung 600x400 khi hiển thị card */
-            object-fit: cover;
-        }
-        
-        .img-hover-zoom:hover img {
-            transform: scale(1.08);
-        }
-
-        /* Hiệu ứng Button */
-        .btn-custom {
-            border-radius: 999px;
-            padding: 10px 25px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-custom:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
-        }
-
-        /* === 3. FOOTER === */
-        footer { 
-            background:#dae0df;
-            color:000000;
-        }
-        
-        .footer-bottom {
-            background: rgba(0,0,0,0.1);
-            padding: 3px 0;
-            font-size: 0.85rem;
-            color:#ffffff;
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .content-card { padding: 1.5rem; }
-        }
-        /* === NAVBAR CUSTOM STYLES === */
-        .navbar-container { background: transparent; }
-        .navbar-container .container { padding: 0; }
-
-        /* Wrapper for the nav to create pill-like bar */
-        .navbar-bar {
-            background: rgba(255, 255, 255, 0.2); /* Độ trong suốt 60% */
-		    backdrop-filter: blur(12px); /* Hiệu ứng làm mờ hậu cảnh quan trọng nhất */
-		    -webkit-backdrop-filter: blur(12px); 
-		    border-radius: 12px; /* Chuyển hẳn sang dạng viên thuốc (pill) */
-		    padding: 6px;
-		    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
-		    border: 1px solid rgba(255, 255, 255, 0.5); /* Viền trắng mảnh giúp nổi khối */
-		    margin-bottom: 1rem;
-		    margin-top: 1rem;
-		    transition: all 0.3s ease;
-        }
-
-        /* Use flex nav and make it horizontally scrollable on small screens */
-        .navbar-bar .nav {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            justify-content: center;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            padding: 6px;
-        }
-
-        /* Hide default scrollbars for a cleaner look (WebKit) */
-        .navbar-bar .nav::-webkit-scrollbar { height: 6px; }
-        .navbar-bar .nav::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.08); border-radius: 6px; }
-
-        /* Nav links styling */
-        .navbar-bar .nav-link {
-            color: #374151; /* gray-700 */
-            background: transparent;
-            padding: 10px 14px;
-            border-radius: 9999px;
-            font-weight: 600;
-            letter-spacing: 0.1px;
-            transition: all .18s ease-in-out;
-            border: 1px solid transparent;
-        }
-
-        .navbar-bar .nav-link:hover {
-            background: linear-gradient(180deg, rgba(88, 101, 242, 0.06), rgba(88,101,242,0.02));
-            color: #2446d8;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(37, 99, 235, 0.06);
-            border-color: rgba(37,99,235,0.08);
-        }
-
-        /* Active pill */
-        .navbar-bar .nav-link.active, .navbar-bar .nav-link:active {
-            background: linear-gradient(90deg, #eeeee4 0%, #a7a7a0 100%);
-            color: #fff !important;
-            box-shadow: 0 8px 20px rgba(79,70,229,0.18);
-            border-color: rgba(255,255,255,0.06);
-        }
-
-        /* Small screens: allow scroll and slight padding */
-        @media (max-width: 768px) {
-            .navbar-bar { padding: 6px 4px; }
-            .navbar-bar .nav-link { padding: 8px 12px; font-size: 14px; }
-            .navbar-bar .nav { justify-content: flex-start; }
-        }
-
-        /* Large screens: left align nav and reduce max width */
-        @media (min-width: 992px) {
-            .navbar-bar { max-width: 1100px; margin-left: auto; margin-right: auto; }
-            .navbar-bar .nav { justify-content: flex-start; }
-        }
-
-        /* Utility: visually hide focus outline but keep accessible focus ring */
-        .navbar-bar .nav-link:focus {
-            outline: none;
-            box-shadow: 0 0 0 4px rgba(37,99,235,0.08);
-        }
-
-        /* === NAVBAR SEARCH STYLES === */
-        .navbar-search { min-width: 220px; }
-        .navbar-search .navbar-search-input {
-            border-radius: 999px;
-            padding: 6px 10px;
-            border: 1px solid rgba(16,24,40,0.06);
-            background: rgba(255,255,255,0.95);
-            min-width: 180px;
-            transition: box-shadow .12s ease, transform .12s ease;
-        }
-        .navbar-search .navbar-search-input:focus {
-            box-shadow: 0 6px 18px rgba(37,99,235,0.08);
-            transform: translateY(-1px);
-            outline: none;
-        }
-        .navbar-search .navbar-search-btn {
-            border-radius: 999px;
-            padding: 6px 10px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-        /* Smaller on mobile stacked search */
-        .d-lg-none .navbar-search-input { min-width: 0; }
-        .d-lg-none .navbar-search-btn { padding: 6px 10px; }
-    </style>
-
+</style>
+    
     <sitemesh:write property="head"/>
 </head>
 <body>
 <div class="wrapper">
 
+    <!-- flash messages for purchase form -->
+    <div style="position:fixed; top:16px; right:16px; z-index:20000;">
+        <c:if test="${not empty sessionScope.purchaseSuccess}">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                ${sessionScope.purchaseSuccess}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <c:remove var="purchaseSuccess" scope="session" />
+        </c:if>
+        <c:if test="${not empty sessionScope.purchaseError}">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                ${sessionScope.purchaseError}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <c:remove var="purchaseError" scope="session" />
+        </c:if>
+    </div>
+
     <header>
-        <div class="header-main border-bottom py-0">
+        <div class="header-main border-bottom py-3">
             <%@ include file="/common/client/header.jsp" %>
         </div>
         <div class="navbar-bar navbar-expand-lg navbar-container mx-auto px-3 px-lg-2">
@@ -219,8 +51,15 @@
     </header>
 
     <main class="container py-1">
-        <div class="row justify-content-center">
-            <div class="content-card">
+		    <div class="row justify-content-center">
+		        <div class="py-2" style="width: 100%;">
+		        	<c:if test="${not empty hideSlidebar ? !hideSlidebar : true}">
+		        	    <jsp:include page="/common/client/slidebar.jsp" />
+		        	</c:if>
+		        	</div>
+		    </div>
+        <div class="row justify-content-center mb-4">
+            <div class="content-card p-4 shadow-sm rounded-3" style="width: 100%;">
                     <sitemesh:write property="body"/>
             </div>
         </div>
@@ -232,13 +71,64 @@
         </div>
         <div class="footer-bottom text-center">
             <div class="container">
-                <p class="mb-0 text-dark">&copy; 2026 HT Store - Bản quyền thuộc về Web Bán Hàng!</p>
+                <p class="mb-0 text-dark">&copy; 2026 WP Store - Bản quyền thuộc về Web Bán Hàng!</p>
             </div>
         </div>
     </footer>
 
 </div>
 
+<div class="contact-group-fixed">
+    <div class="purchase-popup-wrapper">
+        <button class="btn-contact-item btn-purchase-toggle" onclick="togglePurchaseForm()">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span class="badge-text">Mua hàng</span>
+        </button>
+
+        <div id="purchaseFormPopup" class="purchase-form-card">
+            <div class="form-header">
+                <span><i class="fa-solid fa-paper-plane me-2"></i>Đăng ký mua hàng</span>
+                <button type="button" class="btn-close-form" onclick="togglePurchaseForm()">&times;</button>
+            </div>
+            <form id="orderForm" action="${pageContext.request.contextPath}/purchase-register" method="post" class="form-body">
+                <div class="input-group-custom">
+                    <i class="fa-solid fa-user"></i>
+                    <input type="text" name="customerName" placeholder="Họ và tên *" required>
+                </div>
+                <div class="input-group-custom">
+                    <i class="fa-solid fa-phone"></i>
+                    <input type="tel" name="customerPhone" placeholder="Số điện thoại *" required>
+                </div>
+                <div class="input-group-custom">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                    <input type="text" name="productInterest" placeholder="Sản phẩm quan tâm *" required>
+                </div>
+                <div class="input-group-custom">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <textarea name="address" rows="2" placeholder="Địa chỉ giao hàng *" required></textarea>
+                </div>
+                <button type="submit" class="btn-submit-order">GỬI YÊU CẦU NGAY</button>
+            </form>
+        </div>
+    </div>
+
+    <a href="https://zalo.me/0911539809" target="_blank" class="btn-contact-item btn-zalo">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_of_Zalo.svg" alt="Zalo">
+        <span class="badge-text">Zalo</span>
+    </a>
+
+    <a href="tel:0911539809" class="btn-contact-item btn-call">
+        <i class="fa-solid fa-phone"></i>
+        <span class="badge-text">Gọi điện</span>
+    </a>
+</div>
+
+<script>
+    function togglePurchaseForm() {
+        const form = document.getElementById('purchaseFormPopup');
+        form.style.display = (form.style.display === 'block') ? 'none' : 'block';
+    }
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

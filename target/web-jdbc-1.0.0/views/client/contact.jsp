@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    
     <title>Liên hệ với chúng tôi</title>
     
-
     <style>
         /* Compact CSS for contact form */
         .contact-container {
@@ -196,6 +197,16 @@
 <body>
 
 <div class="container contact-container">
+    <!-- flash messages -->
+    <c:if test="${not empty sessionScope.contactSuccess}">
+        <div class="alert alert-success">${sessionScope.contactSuccess}</div>
+        <c:remove var="contactSuccess" scope="session" />
+    </c:if>
+    <c:if test="${not empty sessionScope.contactError}">
+        <div class="alert alert-danger">${sessionScope.contactError}</div>
+        <c:remove var="contactError" scope="session" />
+    </c:if>
+
     <div class="row align-items-start">
         <div class="col-lg-5 pe-lg-5 mb-5 mb-lg-0">
             <h2 class="contact-title">Liên hệ với chúng tôi</h2>
@@ -217,7 +228,7 @@
 
             <div class="contact-info-item">
                 <div class="contact-info-icon"><i class="fas fa-headset"></i></div>
-                <div class="contact-info-text">1900 10 hồi đó</div>
+                <div class="contact-info-text">1900 100 có</div>
             </div>
 
             <div class="contact-info-item">
@@ -227,7 +238,7 @@
 
             <div class="contact-info-item">
                 <div class="contact-info-icon"><i class="fas fa-university"></i></div>
-                <div class="contact-info-text"><strong>999.999.999</strong> – Ngân hàng TMCP Một mình tui</div>
+                <div class="contact-info-text"><strong>999.999.999</strong> – Ngân hàng TNHH Một Mình Tui</div>
             </div>
         </div>
 
@@ -235,7 +246,7 @@
             <div class="contact-form-card">
                 <h3 class="form-title">Yêu cầu tư vấn ngay</h3>
                 
-                <form action="#" method="post">
+                <form action="${pageContext.request.contextPath}/request-support" method="post">
                     <div class="form-group">
                         <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Họ tên *" required>
                         <i class="fas fa-user form-icon"></i>

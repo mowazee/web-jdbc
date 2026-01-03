@@ -53,7 +53,7 @@ public class NewsController extends HttpServlet {
                 req.setAttribute("totalPages", totalPages);
                 req.setAttribute("pageSize", size);
                 req.setAttribute("totalItems", totalItems);
-                req.getRequestDispatcher("/views/client/news/list-new.jsp").forward(req, resp);
+                req.getRequestDispatcher("/views/client/news/news-list.jsp").forward(req, resp);
             } else {
                 // detail - pathInfo like /123
                 String raw = pathInfo.startsWith("/") ? pathInfo.substring(1) : pathInfo;

@@ -6,7 +6,9 @@ C:\Users\hantr\eclipse-workspace\web-jdbc\src\main\java\controller\admin\OrderAd
 C:\Users\hantr\eclipse-workspace\web-jdbc\src\main\java\controller\admin\ProductAdminController.java
 C:\Users\hantr\eclipse-workspace\web-jdbc\src\main\java\controller\admin\UserAdminController.java
 C:\Users\hantr\eclipse-workspace\web-jdbc\src\main\java\controller\CartController.java
+C:\Users\hantr\eclipse-workspace\web-jdbc\src\main\java\controller\CategoryClientController.java
 C:\Users\hantr\eclipse-workspace\web-jdbc\src\main\java\controller\CheckoutController.java
+C:\Users\hantr\eclipse-workspace\web-jdbc\src\main\java\controller\ContactController.java
 C:\Users\hantr\eclipse-workspace\web-jdbc\src\main\java\controller\ForgotPassword.java
 C:\Users\hantr\eclipse-workspace\web-jdbc\src\main\java\controller\HomeController.java
 C:\Users\hantr\eclipse-workspace\web-jdbc\src\main\java\controller\LoginController.java
@@ -24,10 +26,12 @@ C:\Users\hantr\eclipse-workspace\web-jdbc\src\main\java\dao\impl\CategoryDAOImpl
 C:\Users\hantr\eclipse-workspace\web-jdbc\src\main\java\dao\impl\NewDAOImpl.java
 C:\Users\hantr\eclipse-workspace\web-jdbc\src\main\java\dao\impl\OrderDAOImpl.java
 C:\Users\hantr\eclipse-workspace\web-jdbc\src\main\java\dao\impl\ProductDAOImpl.java
+C:\Users\hantr\eclipse-workspace\web-jdbc\src\main\java\dao\impl\ReportDAOImpl.java
 C:\Users\hantr\eclipse-workspace\web-jdbc\src\main\java\dao\impl\UserDAOImpl.java
 C:\Users\hantr\eclipse-workspace\web-jdbc\src\main\java\dao\INewDAO.java
 C:\Users\hantr\eclipse-workspace\web-jdbc\src\main\java\dao\IOrderDAO.java
 C:\Users\hantr\eclipse-workspace\web-jdbc\src\main\java\dao\IProductDAO.java
+C:\Users\hantr\eclipse-workspace\web-jdbc\src\main\java\dao\IReportDAO.java
 C:\Users\hantr\eclipse-workspace\web-jdbc\src\main\java\dao\IUserDAO.java
 C:\Users\hantr\eclipse-workspace\web-jdbc\src\main\java\filters\AdminFilter.java
 C:\Users\hantr\eclipse-workspace\web-jdbc\src\main\java\filters\CategoryFilter.java
@@ -46,10 +50,12 @@ C:\Users\hantr\eclipse-workspace\web-jdbc\src\main\java\service\impl\CategorySer
 C:\Users\hantr\eclipse-workspace\web-jdbc\src\main\java\service\impl\NewServiceImpl.java
 C:\Users\hantr\eclipse-workspace\web-jdbc\src\main\java\service\impl\OrderServiceImpl.java
 C:\Users\hantr\eclipse-workspace\web-jdbc\src\main\java\service\impl\ProductServiceImpl.java
+C:\Users\hantr\eclipse-workspace\web-jdbc\src\main\java\service\impl\ReportServiceImpl.java
 C:\Users\hantr\eclipse-workspace\web-jdbc\src\main\java\service\impl\UserServiceImpl.java
 C:\Users\hantr\eclipse-workspace\web-jdbc\src\main\java\service\INewService.java
 C:\Users\hantr\eclipse-workspace\web-jdbc\src\main\java\service\IOrderService.java
 C:\Users\hantr\eclipse-workspace\web-jdbc\src\main\java\service\IProductService.java
+C:\Users\hantr\eclipse-workspace\web-jdbc\src\main\java\service\IReportService.java
 C:\Users\hantr\eclipse-workspace\web-jdbc\src\main\java\service\IUserService.java
 C:\Users\hantr\eclipse-workspace\web-jdbc\src\main\java\utils\Constant.java
 C:\Users\hantr\eclipse-workspace\web-jdbc\src\main\java\utils\DBConnect.java

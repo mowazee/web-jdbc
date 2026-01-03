@@ -19,20 +19,26 @@
             <a class="nav-link text-secondary" href="${pageContext.request.contextPath}/about">Giới thiệu</a>
           </li>
 
-          <!-- Sản phẩm dropdown: use categories if provided -->
+          <!-- Sản phẩm dropdown: show first 4 categories, then 'Tất cả sản phẩm' -->
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle text-secondary" href="#" id="productDrop" role="button" data-bs-toggle="dropdown" aria-expanded="false">Sản phẩm</a>
             <ul class="dropdown-menu" aria-labelledby="productDrop">
               <c:choose>
                 <c:when test="${not empty categories}">
-                  <c:forEach var="c" items="${categories}">
-                    <li><a class="dropdown-item" href="${pageContext.request.contextPath}/products/category?id=${c.cateid}"><c:out value="${c.catename}"/></a></li>
+                  <c:forEach var="c" items="${categories}" varStatus="st">
+                    <c:if test="${st.index lt 4}">
+                      <li><a class="dropdown-item" href="${pageContext.request.contextPath}/products/category?cateid=${c.cateid}"><c:out value="${c.catename}"/></a></li>
+                    </c:if>
                   </c:forEach>
+                  <li><hr class="dropdown-divider"/></li>
+                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/products/category">Tất cả sản phẩm</a></li>
                 </c:when>
                 <c:otherwise>
-                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/products/category?id=1">Hải Sản Khô</a></li>
-                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/products/category?id=2">Trái Cây Sấy</a></li>
-                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/products/category?id=3">Bánh Kẹo Đặc Sản</a></li>
+                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/products/category?cateid=1">Gạo thơm</a></li>
+                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/products/category?cateid=2">Gạo đặc sản</a></li>
+                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/products/category?cateid=3">Gạo nếp</a></li>
+                  <li><hr class="dropdown-divider"/></li>
+                  <li><a class="dropdown-item" href="${pageContext.request.contextPath}/products/category">Tất cả sản phẩm</a></li>
                 </c:otherwise>
               </c:choose>
             </ul>
@@ -66,9 +72,18 @@
                 Chào bạn <c:out value="${sessionScope.user != null ? sessionScope.user.fullname : sessionScope.username}"/>
               </a>
               <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="userDropNav">
-                <li><a class="dropdown-item" href="${pageContext.request.contextPath}/profile"><i class="fa-solid fa-id-card me-2"></i>Hồ sơ</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item text-danger" href="${pageContext.request.contextPath}/logout"><i class="fa-solid fa-right-from-bracket me-2"></i>Đăng xuất</a></li>
+                <c:choose>
+                  <c:when test="${not empty sessionScope.user and sessionScope.user.roleid == 1}">
+                    <li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/home"><i class="fa-solid fa-gauge me-2"></i>Trang Admin</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item text-danger" href="${pageContext.request.contextPath}/logout"><i class="fa-solid fa-right-from-bracket me-2"></i>Đăng xuất</a></li>
+                  </c:when>
+                  <c:otherwise>
+                    <li><a class="dropdown-item" href="${pageContext.request.contextPath}/profile"><i class="fa-solid fa-id-card me-2"></i>Hồ sơ</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item text-danger" href="${pageContext.request.contextPath}/logout"><i class="fa-solid fa-right-from-bracket me-2"></i>Đăng xuất</a></li>
+                  </c:otherwise>
+                </c:choose>
               </ul>
             </li>
           </c:if>

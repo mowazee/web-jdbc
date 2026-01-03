@@ -17,7 +17,7 @@ import service.IProductService;
 import service.impl.CategoryServiceImpl;
 import service.impl.ProductServiceImpl;
 
-@WebServlet(urlPatterns = { "/products", "/product", "/products/category", "/products/special" })
+@WebServlet(urlPatterns = { "/products", "/product", "/products/special" })
 public class ProductController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private IProductService productService = new ProductServiceImpl();

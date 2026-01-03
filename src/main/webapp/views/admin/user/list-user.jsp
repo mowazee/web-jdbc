@@ -33,25 +33,44 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="u" items="${users}">
-            <tr>
-                <td>${u.id}</td>
-                <td>${u.email}</td>
-                <td>${u.username}</td>
-                <td>${u.fullname}</td>
-                <td>${u.phone}</td>
-                <td>${u.roleid}</td>
-                <td>
-                    <a href="<c:url value='/admin/user?action=edit&id='/>${u.id}" class="btn btn-sm btn-warning">Sửa</a>
-                    <form action="<c:url value='/admin/user'/>" method="post" style="display:inline-block;" onsubmit="return confirm('Bạn có chắc muốn xóa?');">
-                        <input type="hidden" name="action" value="delete"/>
-                        <input type="hidden" name="id" value="${u.id}"/>
-                        <button type="submit" class="btn btn-sm btn-danger">Xóa</button>
-                    </form>
-                </td>
-            </tr>
-        </c:forEach>
+        <c:choose>
+            <c:when test="${not empty users}">
+                <c:set var="startIndex" value="${(currentPage - 1) * pageSize + 1}" />
+                <c:forEach var="u" items="${users}" varStatus="st">
+                    <tr>
+                        <td>${startIndex + st.index}</td>
+                        <td>${u.email}</td>
+                        <td>${u.username}</td>
+                        <td>${u.fullname}</td>
+                        <td>${u.phone}</td>
+                        <td>${u.roleid}</td>
+                        <td>
+                            <a href="<c:url value='/admin/user?action=edit&id='/>${u.id}" class="btn btn-sm btn-warning">Sửa</a>
+                            <form action="<c:url value='/admin/user'/>" method="post" style="display:inline-block;" onsubmit="return confirm('Bạn có chắc muốn xóa?');">
+                                <input type="hidden" name="action" value="delete"/>
+                                <input type="hidden" name="id" value="${u.id}"/>
+                                <button type="submit" class="btn btn-sm btn-danger">Xóa</button>
+                            </form>
+                        </td>
+                    </tr>
+                </c:forEach>
+            </c:when>
+            <c:otherwise>
+                <tr><td colspan="7" class="text-center">Không có người dùng.</td></tr>
+            </c:otherwise>
+        </c:choose>
         </tbody>
     </table>
+    <c:if test="${totalPages > 1}">
+        <nav>
+            <ul class="pagination">
+                <li class="page-item ${currentPage == 1 ? 'disabled' : ''}"><a class="page-link" href="${pageContext.request.contextPath}/admin/users?page=${currentPage-1}">Trang trước</a></li>
+                <c:forEach var="i" begin="1" end="${totalPages}">
+                    <li class="page-item ${i == currentPage ? 'active' : ''}"><a class="page-link" href="${pageContext.request.contextPath}/admin/users?page=${i}">${i}</a></li>
+                </c:forEach>
+                <li class="page-item ${currentPage == totalPages ? 'disabled' : ''}"><a class="page-link" href="${pageContext.request.contextPath}/admin/users?page=${currentPage+1}">Trang sau</a></li>
+            </ul>
+        </nav>
+    </c:if>
 </div>
 </body>

@@ -22,7 +22,7 @@
             <p class="lead text-muted">Cảm ơn bạn đã đặt hàng. Chúng tôi đã nhận đơn và sẽ xử lý trong thời gian sớm nhất.</p>
             <div class="mt-4">
                 <a href="${pageContext.request.contextPath}/home" class="btn btn-primary btn-lg me-2">Về trang chủ</a>
-                <a href="${pageContext.request.contextPath}/orders" class="btn btn-outline-secondary btn-lg">Xem đơn hàng của tôi</a>
+                <a href="#" class="btn btn-outline-secondary btn-lg">Xem đơn hàng của tôi</a>
             </div>
             <p class="mt-3 text-muted small">Bạn sẽ nhận được email xác nhận nếu đã cung cấp địa chỉ email khi đặt hàng.</p>
         </div>

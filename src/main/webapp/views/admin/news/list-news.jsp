@@ -32,34 +32,53 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="n" items="${newsList}">
-            <tr>
-                <td>${n.id}</td>
-                <td>${n.title}</td>
-                <td>${n.authorid}</td>
-                <td>
-                    <c:choose>
-                        <c:when test="${not empty n.image}">
-                            <img src="${pageContext.request.contextPath}/${n.image}" style="height:50px;"/>
-                        </c:when>
-                        <c:when test="${not empty n.thumbnail}">
-                            <img src="${pageContext.request.contextPath}/${n.thumbnail}" style="height:50px;"/>
-                        </c:when>
-                        <c:otherwise>-</c:otherwise>
-                    </c:choose>
-                </td>
-                <td>${n.createdate}</td>
-                <td>
-                    <a href="<c:url value='/admin/news?action=edit&id='/>${n.id}" class="btn btn-sm btn-warning">Sửa</a>
-                    <form action="<c:url value='/admin/news'/>" method="post" style="display:inline-block;" onsubmit="return confirm('Bạn có chắc muốn xóa?');">
-                        <input type="hidden" name="action" value="delete"/>
-                        <input type="hidden" name="id" value="${n.id}"/>
-                        <button type="submit" class="btn btn-sm btn-danger">Xóa</button>
-                    </form>
-                </td>
-            </tr>
-        </c:forEach>
+        <c:choose>
+            <c:when test="${not empty newsList}">
+                <c:set var="startIndex" value="${(currentPage - 1) * pageSize + 1}" />
+                <c:forEach var="n" items="${newsList}" varStatus="st">
+                    <tr>
+                        <td>${startIndex + st.index}</td>
+                        <td>${n.title}</td>
+                        <td>${n.authorid}</td>
+                        <td>
+                            <c:choose>
+                                <c:when test="${not empty n.image}">
+                                    <img src="${pageContext.request.contextPath}/${n.image}" style="height:50px;"/>
+                                </c:when>
+                                <c:when test="${not empty n.thumbnail}">
+                                    <img src="${pageContext.request.contextPath}/${n.thumbnail}" style="height:50px;"/>
+                                </c:when>
+                                <c:otherwise>-</c:otherwise>
+                            </c:choose>
+                        </td>
+                        <td>${n.createdate}</td>
+                        <td>
+                            <a href="<c:url value='/admin/news?action=edit&id='/>${n.id}" class="btn btn-sm btn-warning">Sửa</a>
+                            <form action="<c:url value='/admin/news'/>" method="post" style="display:inline-block;" onsubmit="return confirm('Bạn có chắc muốn xóa?');">
+                                <input type="hidden" name="action" value="delete"/>
+                                <input type="hidden" name="id" value="${n.id}"/>
+                                <button type="submit" class="btn btn-sm btn-danger">Xóa</button>
+                            </form>
+                        </td>
+                    </tr>
+                </c:forEach>
+            </c:when>
+            <c:otherwise>
+                <tr><td colspan="6" class="text-center">Không có tin tức.</td></tr>
+            </c:otherwise>
+        </c:choose>
         </tbody>
     </table>
+    <c:if test="${totalPages > 1}">
+        <nav>
+            <ul class="pagination">
+                <li class="page-item ${currentPage == 1 ? 'disabled' : ''}"><a class="page-link" href="${pageContext.request.contextPath}/admin/news?page=${currentPage-1}">Trang trước</a></li>
+                <c:forEach var="i" begin="1" end="${totalPages}">
+                    <li class="page-item ${i == currentPage ? 'active' : ''}"><a class="page-link" href="${pageContext.request.contextPath}/admin/news?page=${i}">${i}</a></li>
+                </c:forEach>
+                <li class="page-item ${currentPage == totalPages ? 'disabled' : ''}"><a class="page-link" href="${pageContext.request.contextPath}/admin/news?page=${currentPage+1}">Trang sau</a></li>
+            </ul>
+        </nav>
+    </c:if>
 </div>
 </body>

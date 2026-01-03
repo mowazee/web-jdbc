@@ -2,7 +2,7 @@
 <web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	version="6.0">
-	 <display-name>My Web</display-name>
+	 <display-name>Web Project</display-name>
     <welcome-file-list>
         <welcome-file>home.jsp</welcome-file>
         <welcome-file>login.jsp</welcome-file>

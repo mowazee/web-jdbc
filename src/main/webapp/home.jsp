@@ -1,149 +1,143 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>HT Store - Trang chủ</title>
+    <title>WP Store - Trang chủ</title>
     <style>
-        .hero {
-            background: linear-gradient(90deg, rgba(165,94,234,0.12), rgba(255,121,198,0.08)), url('https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1400&auto=format&fit=crop&ixlib=rb-4.0.3&s=') center/cover no-repeat;
-            border-radius: 12px;
-            padding: 48px;
-            margin-bottom: 32px;
-            color: #222;
+        .hero-img { width:100%; max-width:500px; height:320px; object-fit:cover; }
+        .product-card img { width:100%; height:180px; object-fit:cover; }
+        .news-card img { width:100%; height:140px; object-fit:cover; }
+        /* Section separator with subtle gradient/shadow effect */
+        .section-sep {
+            height:4px;
+            border:0;
+            margin:1.75rem 0;
+            background: linear-gradient(90deg, rgba(0,0,0,0.05), rgba(13,110,253,0.25), rgba(0,0,0,0.05));
+            box-shadow: 0 2px 6px rgba(13,110,253,0.03);
+            border-radius:4px;
         }
-        .hero h1 { font-weight: 800; letter-spacing: -1px; }
-        .product-card img { height:160px; object-fit:cover; border-top-left-radius: .5rem; border-top-right-radius: .5rem; }
-        .news-item { border-left:4px solid #a55eea; padding-left:12px; margin-bottom:14px; }
+        /* Partners row */
+        .partners-row { display:flex; gap:16px; justify-content:center; align-items:center; flex-wrap:wrap; }
+        .partner-item { width:250px; height:150px; background:#f5f5f5; display:flex; align-items:center; justify-content:center; overflow:hidden; border-radius:6px; }
+        .partner-item img { width:100%; height:100%; object-fit:cover; }
     </style>
 </head>
 <body>
-<div class="container">
-    <div class="hero d-flex align-items-center justify-content-between">
-        <div class="hero-text">
-            <h1>Chào mừng đến WEB1 Store</h1>
-            <p class="lead">Sản phẩm chất lượng — Giá tốt — Giao nhanh toàn quốc.</p>
-            <p><a href="${pageContext.request.contextPath}/products" class="btn btn-lg btn-primary me-2">Khám phá sản phẩm</a>
-            <a href="${pageContext.request.contextPath}/news" class="btn btn-outline-primary">Xem tin tức</a></p>
+<div class="container mt-4">
+
+    <!-- Block 1: Intro (image left, text right) -->
+    <div class="row align-items-center mb-5">
+        <div class="col-md-6">
+            <img src="${pageContext.request.contextPath}/static/placeholder-hero.jpg" alt="Hero" class="hero-img rounded shadow-sm">
         </div>
-        <div class="hero-image d-none d-md-block" style="width:420px;">
-            <img src="https://images.unsplash.com/photo-1603791440384-56cd371ee9a7?q=80&w=720&auto=format&fit=crop&ixlib=rb-4.0.3&s=" alt="hero" class="img-fluid rounded-3" />
+        <div class="col-md-6">
+            <h2>Giới thiệu về doanh nghiệp</h2>
+            <p class="text-muted">Chúng tôi cung cấp các loại gạo chất lượng cao, an toàn và thơm ngon. Với nhiều năm kinh nghiệm trong ngành, chúng tôi cam kết mang đến khách hàng sản phẩm tốt nhất và dịch vụ chu đáo.</p>
+            <p>Đội ngũ của chúng tôi luôn tận tâm chọn lựa nguồn gạo, kiểm tra chất lượng và đóng gói cẩn thận để bảo đảm sự hài lòng của khách hàng.</p>
+            <a href="${pageContext.request.contextPath}/about" class="btn btn-primary">Xem chi tiết</a>
         </div>
     </div>
 
+    <hr class="section-sep" />
+
+    <!-- Block 2: Featured products (4 items) -->
     <div class="row mb-4">
-        <div class="col-md-8">
-            <div class="d-flex align-items-center justify-content-between mb-3">
-                <h4 class="mb-0">Sản phẩm nổi bật</h4>
-                <a href="${pageContext.request.contextPath}/products" class="small">Xem tất cả</a>
-            </div>
-            <div class="row g-3">
-                <c:choose>
-                    <c:when test="${not empty products}">
-                        <c:forEach var="p" items="${products}" varStatus="st">
-                            <div class="col-6 col-sm-4 col-md-3">
-                                <div class="card product-card shadow-sm h-100">
-                                    <img src="${p.imageUrl != null ? p.imageUrl : 'https://via.placeholder.com/400x300?text=Product'}" class="card-img-top" alt="${p.name}" />
-                                    <div class="card-body d-flex flex-column">
-                                        <h6 class="card-title mb-1">${p.name}</h6>
-                                        <p class="card-text text-danger fw-bold mb-2"><fmt:formatNumber value="${p.price}" pattern="#"/> VNĐ</p>
-                                        <div class="mt-auto d-flex justify-content-between align-items-center">
-                                            <a href="${pageContext.request.contextPath}/product/detail?id=${p.id}" class="btn btn-outline-primary btn-sm">Xem</a>
-                                            <form action="${pageContext.request.contextPath}/cart/add" method="get" class="m-0">
-                                                <input type="hidden" name="id" value="${p.id}">
-                                                <button class="btn btn-primary btn-sm">Mua</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </c:forEach>
-                    </c:when>
-                    <c:otherwise>
-                        <!-- static sample products -->
-                        <div class="col-6 col-sm-4 col-md-3">
-                            <div class="card product-card shadow-sm h-100">
-                                <img src="https://images.unsplash.com/photo-1528825871115-3581a5387919?q=80&w=720&auto=format&fit=crop&ixlib=rb-4.0.3&s=" class="card-img-top" alt="Bộ ly sứ đẹp" />
-                                <div class="card-body d-flex flex-column">
-                                    <h6 class="card-title mb-1">Bộ ly sứ đẹp</h6>
-                                    <p class="card-text text-danger fw-bold mb-2">199.000 VNĐ</p>
-                                    <div class="mt-auto d-flex justify-content-between align-items-center">
-                                        <a href="#" class="btn btn-outline-primary btn-sm">Xem</a>
-                                        <a href="#" class="btn btn-primary btn-sm">Mua</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6 col-sm-4 col-md-3">
-                            <div class="card product-card shadow-sm h-100">
-                                <img src="https://images.unsplash.com/photo-1542293787938-c9e299b8809a?q=80&w=720&auto=format&fit=crop&ixlib=rb-4.0.3&s=" class="card-img-top" alt="Túi vải thời trang" />
-                                <div class="card-body d-flex flex-column">
-                                    <h6 class="card-title mb-1">Túi vải thời trang</h6>
-                                    <p class="card-text text-danger fw-bold mb-2">249.000 VNĐ</p>
-                                    <div class="mt-auto d-flex justify-content-between align-items-center">
-                                        <a href="#" class="btn btn-outline-primary btn-sm">Xem</a>
-                                        <a href="#" class="btn btn-primary btn-sm">Mua</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6 col-sm-4 col-md-3">
-                            <div class="card product-card shadow-sm h-100">
-                                <img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?q=80&w=720&auto=format&fit=crop&ixlib=rb-4.0.3&s=" class="card-img-top" alt="Đèn để bàn hiện đại" />
-                                <div class="card-body d-flex flex-column">
-                                    <h6 class="card-title mb-1">Đèn để bàn hiện đại</h6>
-                                    <p class="card-text text-danger fw-bold mb-2">399.000 VNĐ</p>
-                                    <div class="mt-auto d-flex justify-content-between align-items-center">
-                                        <a href="#" class="btn btn-outline-primary btn-sm">Xem</a>
-                                        <a href="#" class="btn btn-primary btn-sm">Mua</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </c:otherwise>
-                </c:choose>
-            </div>
+        <div class="col-12 d-flex justify-content-between align-items-center mb-3">
+            <h4>Sản phẩm nổi bật</h4>
+            <a href="${pageContext.request.contextPath}/products/category" class="btn btn-outline-primary btn-sm">Xem tất cả</a>
         </div>
-        <div class="col-md-4">
-            <div class="mb-3">
-                <h5>Tin tức mới</h5>
-            </div>
-            <div class="mb-3">
-                <c:choose>
-                    <c:when test="${not empty news}">
-                        <c:forEach var="n" items="${news}">
-                            <div class="news-item">
-                                <a href="${pageContext.request.contextPath}/news/detail?id=${n.id}"><strong>${n.title}</strong></a>
-                                <p class="mb-0 small text-muted">${n.publishedDate}</p>
+
+        <c:if test="${not empty products}">
+            <c:forEach var="p" items="${products}">
+                <div class="col-6 col-md-3 mb-3">
+                    <div class="card h-100 shadow-sm">
+                        <c:choose>
+                            <c:when test="${not empty p.image}">
+                                <img src="${pageContext.request.contextPath}/${p.image}" class="card-img-top" alt="${p.name}" style="height:160px;object-fit:cover;"/>
+                            </c:when>
+                            <c:otherwise>
+                                <div style="height:160px;background:#f5f5f5;display:flex;align-items:center;justify-content:center;color:#999;">No image</div>
+                            </c:otherwise>
+                        </c:choose>
+                        <div class="card-body d-flex flex-column">
+                            <h6 class="card-title mb-2" style="min-height:3em;">${p.name}</h6>
+                            <div class="mt-auto d-flex justify-content-between align-items-center">
+                                <div class="fw-bold text-primary"><fmt:formatNumber value="${p.price}" pattern="#,##0"/> VNĐ</div>
+                                <a class="btn btn-outline-primary btn-sm" href="${pageContext.request.contextPath}/product/detail?id=${p.id}">Xem</a>
                             </div>
-                        </c:forEach>
-                    </c:when>
-                    <c:otherwise>
-                        <div class="news-item">
-                            <a href="#"><strong>Ra mắt chương trình giảm giá tháng 1</strong></a>
-                            <p class="mb-0 small text-muted">02/01/2026</p>
                         </div>
-                        <div class="news-item">
-                            <a href="#"><strong>Hướng dẫn bảo quản sản phẩm</strong></a>
-                            <p class="mb-0 small text-muted">28/12/2025</p>
-                        </div>
-                    </c:otherwise>
-                </c:choose>
-            </div>
-            <div class="card p-3">
-                <h6>Đăng ký nhận tin</h6>
-                <form action="#" method="post">
-                    <div class="mb-2">
-                        <input type="email" name="email" class="form-control form-control-sm" placeholder="Email của bạn" required>
                     </div>
-                    <button class="btn btn-sm btn-primary">Đăng ký</button>
-                </form>
+                </div>
+            </c:forEach>
+        </c:if>
+        <c:if test="${empty products}">
+            <div class="col-12">
+                <div class="alert alert-info">Chưa có sản phẩm để hiển thị.</div>
+            </div>
+        </c:if>
+    </div>
+
+    <hr class="section-sep" />
+
+    <!-- Block 3: News (3 items) -->
+    <div class="row mb-5">
+        <div class="col-12 d-flex justify-content-between align-items-center mb-3">
+            <h4>Tin tức mới</h4>
+            <a href="${pageContext.request.contextPath}/news" class="btn btn-outline-primary btn-sm">Xem tất cả</a>
+        </div>
+
+        <c:if test="${not empty newsList}">
+            <c:forEach var="n" items="${newsList}">
+                <div class="col-md-4 mb-3">
+                    <div class="card h-100">
+                        <c:choose>
+                            <c:when test="${not empty n.thumbnail}">
+                                <img src="${pageContext.request.contextPath}/${n.thumbnail}" class="card-img-top news-card" alt="${n.title}"/>
+                            </c:when>
+                            <c:when test="${not empty n.image}">
+                                <img src="${pageContext.request.contextPath}/${n.image}" class="card-img-top news-card" alt="${n.title}"/>
+                            </c:when>
+                            <c:otherwise>
+                                <div style="height:140px;background:#f5f5f5;display:flex;align-items:center;justify-content:center;color:#999;">No image</div>
+                            </c:otherwise>
+                        </c:choose>
+                        <div class="card-body d-flex flex-column">
+                            <h6 class="card-title mb-2">${n.title}</h6>
+                            <p class="text-muted small mb-2">Ngày: <fmt:formatDate value="${n.createdate}" pattern="dd/MM/yyyy"/></p>
+                            <a class="mt-auto btn btn-outline-primary btn-sm" href="${pageContext.request.contextPath}/news/${n.id}">Xem chi tiết</a>
+                        </div>
+                    </div>
+                </div>
+            </c:forEach>
+        </c:if>
+        <c:if test="${empty newsList}">
+            <div class="col-12">
+                <div class="alert alert-info">Chưa có tin tức để hiển thị.</div>
+            </div>
+        </c:if>
+    </div>
+
+    <hr class="section-sep" />
+
+    <!-- Block 4: Partners / Sponsors strip -->
+    <div class="row mb-5">
+        <div class="col-12 text-center mb-3">
+            <h5 class="fw-bold">ĐỒNG HÀNH CÙNG CHÚNG TÔI</h5>
+            <p class="text-muted">Các đối tác và nhà cung cấp tiêu biểu</p>
+        </div>
+        <div class="col-12">
+            <div class="partners-row">
+                <div class="partner-item"><img src="${pageContext.request.contextPath}/static/placeholder-250x150.png" alt="partner-1"></div>
+                <div class="partner-item"><img src="${pageContext.request.contextPath}/static/placeholder-250x150.png" alt="partner-2"></div>
+                <div class="partner-item"><img src="${pageContext.request.contextPath}/static/placeholder-250x150.png" alt="partner-3"></div>
+                <div class="partner-item"><img src="${pageContext.request.contextPath}/static/placeholder-250x150.png" alt="partner-4"></div>
+                <div class="partner-item"><img src="${pageContext.request.contextPath}/static/placeholder-250x150.png" alt="partner-5"></div>
             </div>
         </div>
     </div>
 
-    <hr />
 </div>
 </body>

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 
 <div class="admin-sidebar">
     <div class="sidebar-header mb-4">
@@ -45,7 +45,7 @@
 
     <div class="sidebar-search mt-4 p-3 bg-light rounded-3">
         <label class="form-label small fw-bold text-muted">Tìm kiếm nhanh</label>
-        <form action="${pageContext.request.contextPath}/admin/search" method="get">
+        <form action="#" method="get">
             <div class="input-group input-group-sm">
                 <input type="search" name="q" class="form-control border-primary" placeholder="Tìm kiếm...">
                 <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>

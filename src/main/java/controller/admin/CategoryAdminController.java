@@ -30,9 +30,26 @@ public class CategoryAdminController extends HttpServlet {
         try {
             String action = req.getParameter("action");
             if (action == null || action.isEmpty()) {
-                // list
+                // list with pagination
                 List<CategoryModel> list = categoryService.findAll();
-                req.setAttribute("categories", list);
+                // pagination params
+                String pageParam = req.getParameter("page");
+                int page = 1;
+                int pageSize = 10; // default 10 per page
+                try { if (pageParam != null) page = Math.max(1, Integer.parseInt(pageParam)); } catch (NumberFormatException ex) { page = 1; }
+
+                int totalItems = list == null ? 0 : list.size();
+                int totalPages = totalItems == 0 ? 1 : (int) Math.ceil((double) totalItems / pageSize);
+                if (page > totalPages) page = totalPages;
+                int fromIndex = (page - 1) * pageSize;
+                int toIndex = Math.min(fromIndex + pageSize, totalItems);
+                List<CategoryModel> pageList = (list == null || list.isEmpty()) ? java.util.Collections.emptyList() : list.subList(fromIndex, toIndex);
+
+                req.setAttribute("categories", pageList);
+                req.setAttribute("currentPage", page);
+                req.setAttribute("totalPages", totalPages);
+                req.setAttribute("pageSize", pageSize);
+                req.setAttribute("totalItems", totalItems);
                 req.getRequestDispatcher("/views/admin/category/list-category.jsp").forward(req, resp);
                 return;
             }

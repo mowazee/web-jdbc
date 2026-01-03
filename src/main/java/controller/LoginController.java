@@ -29,6 +29,17 @@ public class LoginController extends HttpServlet {
 				if (cookie.getName().equals("username")) {
 					session = req.getSession(true);
 					session.setAttribute("username", cookie.getValue());
+					// Load full UserModel into session when cookie is present so role checks work
+					try {
+						IUserService userService = new UserServiceImpl();
+						UserModel user = userService.findByUsername(cookie.getValue());
+						if (user != null) {
+							session.setAttribute("user", user);
+						}
+					} catch (Exception e) {
+						// swallow but log; keep cookie-based username so user can still be redirected to waiting
+						e.printStackTrace();
+					}
 					resp.sendRedirect(req.getContextPath() + "/waiting");
 					return;
 				}

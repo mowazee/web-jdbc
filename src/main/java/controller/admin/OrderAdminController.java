@@ -23,7 +23,21 @@ public class OrderAdminController extends HttpServlet {
             String action = req.getParameter("action");
             if (action == null || action.isEmpty()) {
                 List<OrderModel> orders = orderService.findAll();
-                req.setAttribute("orders", orders);
+                String pageParam = req.getParameter("page");
+                int page = 1;
+                int pageSize = 10;
+                try { if (pageParam != null) page = Math.max(1, Integer.parseInt(pageParam)); } catch (NumberFormatException ex) { page = 1; }
+                int totalItems = orders == null ? 0 : orders.size();
+                int totalPages = totalItems == 0 ? 1 : (int) Math.ceil((double) totalItems / pageSize);
+                if (page > totalPages) page = totalPages;
+                int fromIndex = (page - 1) * pageSize;
+                int toIndex = Math.min(fromIndex + pageSize, totalItems);
+                List<OrderModel> pageList = (orders == null || orders.isEmpty()) ? java.util.Collections.emptyList() : orders.subList(fromIndex, toIndex);
+                req.setAttribute("orders", pageList);
+                req.setAttribute("currentPage", page);
+                req.setAttribute("totalPages", totalPages);
+                req.setAttribute("pageSize", pageSize);
+                req.setAttribute("totalItems", totalItems);
                 req.getRequestDispatcher("/views/admin/order/list-order.jsp").forward(req, resp);
                 return;
             }

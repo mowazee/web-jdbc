@@ -115,7 +115,7 @@
     </div>
     <div class="footer-bottom text-center">
             <div class="container">
-                <p class="mb-0 text-dark">&copy; 2026 HT Store - Bản quyền thuộc về Web Bán Hàng!</p>
+                <p class="mb-0 text-dark">&copy; 2026 WP Store - Bản quyền thuộc về Web Bán Hàng!</p>
             </div>
     </div>
 

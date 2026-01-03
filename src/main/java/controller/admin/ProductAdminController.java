@@ -36,7 +36,22 @@ public class ProductAdminController extends HttpServlet {
             String action = req.getParameter("action");
             if (action == null || action.isEmpty()) {
                 List<ProductModel> products = productService.findAll();
-                req.setAttribute("products", products);
+                // pagination params
+                String pageParam = req.getParameter("page");
+                int page = 1;
+                int pageSize = 10;
+                try { if (pageParam != null) page = Math.max(1, Integer.parseInt(pageParam)); } catch (NumberFormatException ex) { page = 1; }
+                int totalItems = products == null ? 0 : products.size();
+                int totalPages = totalItems == 0 ? 1 : (int) Math.ceil((double) totalItems / pageSize);
+                if (page > totalPages) page = totalPages;
+                int fromIndex = (page - 1) * pageSize;
+                int toIndex = Math.min(fromIndex + pageSize, totalItems);
+                List<ProductModel> pageList = (products == null || products.isEmpty()) ? java.util.Collections.emptyList() : products.subList(fromIndex, toIndex);
+                req.setAttribute("products", pageList);
+                req.setAttribute("currentPage", page);
+                req.setAttribute("totalPages", totalPages);
+                req.setAttribute("pageSize", pageSize);
+                req.setAttribute("totalItems", totalItems);
                 // provide categories so list view can display category names (not just IDs)
                 req.setAttribute("categories", categoryService.findAll());
                 // flash message support: move from session to request

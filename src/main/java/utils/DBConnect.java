@@ -48,7 +48,6 @@ public class DBConnect {
             } catch (Exception e2) {
                 //System.err.println("[DBConnect] Failed to write DB connect error log: " + e2.getMessage());
             }
-            // Try SQL authentication fallback if environment variables DB_USER/DB_PASS are provided
             String dbUser = System.getenv("DB_USER");
             String dbPass = System.getenv("DB_PASS");
             if (dbUser != null && dbPass != null) {
@@ -79,13 +78,12 @@ public class DBConnect {
             throw ex;
         }
     }
-    
-    // Optionally, helper to use SQL authentication (uncomment and provide credentials if needed)
-    // public Connection getConnectionWithCredentials(String user, String pass) throws Exception {
-    //     String url = "jdbc:sqlserver://" + serverName + ":" + portNumber + ";databaseName=" + dbName
-    //             + ";encrypt=true;trustServerCertificate=true";
-    //     System.out.println("[DBConnect] Attempting DB connection with URL (SQL auth): " + url);
-    //     Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-    //     return DriverManager.getConnection(url, user, pass);
-    // }
+	//  public static void main(String[] args) {
+	//	try {
+	//	System.out.println(new DBConnect().getConnection());
+	//	} catch (Exception e) {
+	//	e.printStackTrace();
+	//	}
+	//}
+
 }

@@ -14,10 +14,10 @@
             </div>
 
             <div class="col-md-2 mb-3"> <h5 class="text-uppercase fw-bold mb-3">Danh Mục</h5> <ul class="list-unstyled">
-                    <li><a href="<c:url value='/products/category?id=1'/>" class="text-dark text-decoration-none small">Hải Sản Khô</a></li>
-                    <li><a href="<c:url value='/products/category?id=2'/>" class="text-dark text-decoration-none small">Trái Cây Sấy</a></li>
-                    <li><a href="<c:url value='/products/category?id=3'/>" class="text-dark text-decoration-none small">Bánh Kẹo Đặc Sản</a></li>
-                    <li><a href="<c:url value='/blog'/>" class="text-dark text-decoration-none small">Tin Tức và Blog</a></li>
+                    <li><a href="<c:url value='/products/category?id=1'/>" class="text-dark text-decoration-none small">Gạo thơm</a></li>
+                    <li><a href="<c:url value='/products/category?id=2'/>" class="text-dark text-decoration-none small">Gạo đặc sản</a></li>
+                    <li><a href="<c:url value='/products/category?id=3'/>" class="text-dark text-decoration-none small">Gạo nếp</a></li>
+                    <li><a href="<c:url value='/news'/>" class="text-dark text-decoration-none small">Tin Tức và Blog</a></li>
                 </ul>
             </div>
 
@@ -29,9 +29,9 @@
                 </ul>
             </div>
 
-            <div class="col-md-4 mb-3"> <h5 class="text-uppercase fw-bold mb-3">Liên Hệ</h5> <p class="small text-dark"><i class="fas fa-home me-3"></i> 123 Đường Công Nghệ, TP. HCM</p>
-                <p class="small text-dark"><i class="fas fa-envelope me-3"></i> support@example.com</p>
-                <p class="small text-dark"><i class="fas fa-phone me-3"></i> + 84 90 123 4567</p>
+            <div class="col-md-4 mb-3"> <h5 class="text-uppercase fw-bold mb-3">Liên Hệ</h5> <p class="small text-dark"><i class="fas fa-home me-3"></i> Võ Văn Ngân, Phường Thủ Đức, TP. Hồ Chí Minh</p>
+                <p class="small text-dark"><i class="fas fa-envelope me-3"></i> support@wpstore.vn</p>
+                <p class="small text-dark"><i class="fas fa-phone me-3"></i> + 84 9123 45..</p>
                 
                 <div class="mt-2"> <a href="#" class="btn btn-outline-dark btn-sm me-2"><i class="fab fa-facebook-f"></i></a>
                     <a href="#" class="btn btn-outline-dark btn-sm me-2"><i class="fab fa-twitter"></i></a>
