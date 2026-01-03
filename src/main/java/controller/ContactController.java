@@ -53,7 +53,7 @@ private static final long serialVersionUID = 1L;
 	            // set a unified purchase/register notification and redirect to notification page
 	            session.setAttribute("purchaseRegisterMessage", "Cám ơn bạn đã gửi yêu cầu. Chúng tôi sẽ liên hệ lại sớm.");
 	            session.setAttribute("purchaseRegisterSuccess", Boolean.TRUE);
-	            resp.sendRedirect(req.getContextPath() + "/purchaseregister.jsp");
+	            resp.sendRedirect(req.getContextPath() + "/views/client/purchaseregister.jsp");
 	            return;
 	        } else if ("/purchase-register".equals(path)) {
 	            // purchase registration from floating form
@@ -82,7 +82,7 @@ private static final long serialVersionUID = 1L;
 	            // redirect to unified notification page
 	            session.setAttribute("purchaseRegisterMessage", "Cảm ơn! Yêu cầu mua hàng đã được gửi. Chúng tôi sẽ liên hệ sớm.");
 	            session.setAttribute("purchaseRegisterSuccess", Boolean.TRUE);
-	            resp.sendRedirect(req.getContextPath() + "/purchaseregister.jsp");
+	            resp.sendRedirect(req.getContextPath() + "/views/client/purchaseregister.jsp");
 	            return;
 	        } else {
 	            resp.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -93,7 +93,7 @@ private static final long serialVersionUID = 1L;
 	        // set failure message on notification page
 	        session.setAttribute("purchaseRegisterMessage", "Đã xảy ra lỗi khi gửi thông tin: " + e.getMessage());
 	        session.setAttribute("purchaseRegisterSuccess", Boolean.FALSE);
-	        resp.sendRedirect(req.getContextPath() + "/purchaseregister.jsp");
+	        resp.sendRedirect(req.getContextPath() + "/views/client/purchaseregister.jsp");
              return;
         }
 	}

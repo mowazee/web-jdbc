@@ -25,7 +25,7 @@
             </c:if>
             <div class="mt-4">
                 <a href="${pageContext.request.contextPath}/home" class="btn btn-primary btn-lg me-2">Về trang chủ</a>
-                <a href="${pageContext.request.contextPath}/orders" class="btn btn-outline-secondary btn-lg">Xem đơn hàng của tôi</a>
+                <a href="#" class="btn btn-outline-secondary btn-lg">Xem đơn hàng của tôi</a>
             </div>
             <p class="small text-muted mt-3">Bạn sẽ nhận được email xác nhận nếu đã cung cấp địa chỉ email khi đặt hàng.</p>
         </div>

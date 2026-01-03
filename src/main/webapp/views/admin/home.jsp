@@ -5,6 +5,11 @@
 <head>
 <title>Trang chủ - Dashboard</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+    /* ensure chart areas have a defined height so Chart.js can render when maintainAspectRatio:false */
+    #revenueChart { display:block; width:100%; height:320px; }
+    #newsChart { display:block; width:100%; height:300px; }
+</style>
 </head>
 <body>
 <div class="container py-4">
@@ -30,7 +35,9 @@
                         <button id="exportRevenueBtn" class="btn btn-sm btn-outline-secondary">Export CSV</button>
                     </div>
                 </div>
-                <canvas id="revenueChart" width="800" height="320"></canvas>
+                <div style="position:relative; min-height:320px;">
+                    <canvas id="revenueChart" width="800" height="320"></canvas>
+                </div>
             </div>
         </div>
         <div class="col-lg-4 mb-4">
@@ -41,7 +48,9 @@
                         <button id="exportNewsBtn" class="btn btn-sm btn-outline-secondary">Export CSV</button>
                     </div>
                 </div>
-                <canvas id="newsChart" width="400" height="300"></canvas>
+                <div style="position:relative; min-height:300px;">
+                    <canvas id="newsChart" width="400" height="300"></canvas>
+                </div>
                 <div id="newsList" class="mt-3"></div>
             </div>
         </div>
@@ -53,21 +62,33 @@
 <script id="topNewsData" type="application/json"><c:out value="${topNewsJson == null ? '[]' : topNewsJson}" escapeXml="false"/></script>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<div id="chartWarning" style="display:none; max-width:800px; margin:8px auto; text-align:center; color:#842029; background:#fff0f0; border:1px solid #f5c2c7; padding:8px; border-radius:6px;">Cảnh báo: Thư viện Chart.js chưa được tải. Biểu đồ sẽ không hiển thị. Vui lòng kiểm tra kết nối mạng hoặc thêm thư viện Chart.js vào dự án.</div>
 <script>
 (function(){
--    const productRevenue = ${productRevenueJson == null ? '{}': productRevenueJson};
--    const topNews = ${topNewsJson == null ? '[]' : topNewsJson};
-+    // parse embedded JSON safely
-+    let productRevenue = {};
-+    let topNews = [];
-+    try {
-+        const prText = document.getElementById('productRevenueData').textContent || '{}';
-+        productRevenue = JSON.parse(prText);
-+    } catch(e){ console.error('Failed to parse productRevenueJson', e); productRevenue = {}; }
-+    try {
-+        const tnText = document.getElementById('topNewsData').textContent || '[]';
-+        topNews = JSON.parse(tnText);
-+    } catch(e){ console.error('Failed to parse topNewsJson', e); topNews = []; }
+    // if Chart is not defined, show warning and avoid running chart logic
+    if (typeof Chart === 'undefined') {
+        console.error('Chart.js not loaded; charts will not render.');
+        var warn = document.getElementById('chartWarning'); if (warn) warn.style.display = 'block';
+        // disable export buttons to avoid JS errors
+        var revBtn = document.getElementById('exportRevenueBtn'); if (revBtn) { revBtn.disabled = true; revBtn.title='Chart.js not loaded'; }
+        var newsBtn = document.getElementById('exportNewsBtn'); if (newsBtn) { newsBtn.disabled = true; newsBtn.title='Chart.js not loaded'; }
+        return; // stop further chart initialization
+    }
+
+    // parse embedded JSON safely
+    let productRevenue = {};
+    let topNews = [];
+    try {
+        const prText = document.getElementById('productRevenueData').textContent || '{}';
+        productRevenue = JSON.parse(prText);
+    } catch(e){ console.error('Failed to parse productRevenueJson', e); productRevenue = {}; }
+    try {
+        const tnText = document.getElementById('topNewsData').textContent || '[]';
+        topNews = JSON.parse(tnText);
+    } catch(e){ console.error('Failed to parse topNewsJson', e); topNews = []; }
+
+    console.debug('productRevenue parsed:', productRevenue);
+    console.debug('topNews parsed:', topNews);
 
     // prepare labels
     const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -75,42 +96,25 @@
     // currency formatter for VNĐ
     function formatVND(value){
         if (value == null) return '0 VNĐ';
-        try{
-            return new Intl.NumberFormat('vi-VN').format(Math.round(value)) + ' VNĐ';
-        }catch(e){
-            return value + ' VNĐ';
-        }
+        try{ return new Intl.NumberFormat('vi-VN').format(Math.round(value)) + ' VNĐ'; }catch(e){ return value + ' VNĐ'; }
     }
 
     // revenue chart
     const ctx = document.getElementById('revenueChart').getContext('2d');
     const datasets = [];
--    Object.keys(productRevenue).forEach((prod, idx) => {
--        const data = productRevenue[prod];
--        datasets.push({
--            label: prod,
--            data: data,
--            fill: false,
--            borderWidth: 2,
--            tension: 0.2,
--        });
--    });
-+    // Ensure each product series has 12 numeric points (one per month)
-+    const productKeys = Object.keys(productRevenue || {});
-+    productKeys.forEach((prod, idx) => {
-+        let data = productRevenue[prod] || [];
-+        // coerce to numbers and ensure length 12
-+        const normalized = new Array(12).fill(0).map((_,i) => {
-+            const v = data[i];
-+            const n = Number(v);
-+            return isNaN(n) ? 0 : n;
-+        });
-+        datasets.push({ label: prod, data: normalized, fill: false, borderWidth: 2, tension: 0.2 });
-+    });
-+    // If no data at all, add a placeholder dataset so chart renders cleanly
-+    if (datasets.length === 0) {
-+        datasets.push({ label: 'No data', data: new Array(12).fill(0), borderWidth: 1, borderColor: 'rgba(200,200,200,0.6)', backgroundColor: 'rgba(200,200,200,0.2)' });
-+    }
+    const productKeys = Object.keys(productRevenue || {});
+    productKeys.forEach((prod, idx) => {
+        let data = productRevenue[prod] || [];
+        const normalized = new Array(12).fill(0).map((_,i) => {
+            const v = data[i];
+            const n = Number(v);
+            return isNaN(n) ? 0 : n;
+        });
+        datasets.push({ label: prod, data: normalized, fill: false, borderWidth: 2, tension: 0.2 });
+    });
+    if (datasets.length === 0) {
+        datasets.push({ label: 'No data', data: new Array(12).fill(0), borderWidth: 1, borderColor: 'rgba(200,200,200,0.6)', backgroundColor: 'rgba(200,200,200,0.2)' });
+    }
     const revenueChart = new Chart(ctx, {
         type: 'line',
         data: { labels: months, datasets: datasets },
@@ -119,23 +123,10 @@
             maintainAspectRatio: false,
             interaction: { mode: 'index', intersect: false },
             plugins: {
-                tooltip: {
-                    callbacks: {
-                        label: function(context){
-                            const y = context.parsed.y;
-                            return context.dataset.label + ': ' + formatVND(y);
-                        }
-                    }
-                },
+                tooltip: { callbacks: { label: function(context){ const y = context.parsed.y; return context.dataset.label + ': ' + formatVND(y); } } },
                 legend: { position: 'bottom', labels: { boxWidth: 12 } }
             },
-            scales: {
-                y: {
-                    ticks: {
-                        callback: function(value){ return formatVND(value); }
-                    }
-                }
-            }
+            scales: { y: { ticks: { callback: function(value){ return formatVND(value); } } } }
         }
     });
 
@@ -161,9 +152,7 @@
             options: { responsive: true, maintainAspectRatio: false }
         });
     } else {
-        // no data -> show placeholder message instead of chart
         newsListDiv.innerHTML = '<div class="text-muted">Không có dữ liệu tin tức cho năm này.</div>';
-        // draw an empty chart to preserve layout
         const newsChart = new Chart(ctx2, {
             type: 'bar',
             data: { labels: ['N/A'], datasets: [{ label: 'Lượt xem', data: [0], backgroundColor: 'rgba(200,200,200,0.4)' }] },
@@ -185,7 +174,6 @@
     }
 
     function exportRevenueCSV(){
-        // header
         const header = ['Product','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
         const rows = [header];
         Object.keys(productRevenue).forEach(prod => {
@@ -194,21 +182,18 @@
             for(let i=0;i<12;i++) row.push(arr[i] == null ? 0 : Math.round(arr[i]));
             rows.push(row);
         });
-        // build CSV
         const csv = rows.map(r => r.map(cell => '"'+String(cell).replace(/"/g,'""')+'"').join(',')).join('\n');
-        downloadCSV('product_revenue_${reportYear}.csv', csv);
+        downloadCSV('product_revenue_' + ${reportYear} + '.csv', csv);
     }
 
     function exportNewsCSV(){
         const header = ['Month','Title','Views'];
         const rows = [header];
         if (Array.isArray(topNews)){
-            topNews.forEach(item => {
-                rows.push([item.month, item.title, item.views]);
-            });
+            topNews.forEach(item => { rows.push([item.month, item.title, item.views]); });
         }
         const csv = rows.map(r => r.map(cell => '"'+String(cell).replace(/"/g,'""')+'"').join(',')).join('\n');
-        downloadCSV('top_news_${reportYear}.csv', csv);
+        downloadCSV('top_news_' + ${reportYear} + '.csv', csv);
     }
 
     document.getElementById('exportRevenueBtn').addEventListener('click', function(e){ e.preventDefault(); exportRevenueCSV(); });

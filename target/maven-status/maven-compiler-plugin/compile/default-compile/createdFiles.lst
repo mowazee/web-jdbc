@@ -61,3 +61,4 @@ service\impl\ReportServiceImpl.class
 controller\admin\ProductAdminController.class
 controller\ProductDetailController.class
 controller\ResetPasswordController.class
+controller\admin\ReportDebugController.class
