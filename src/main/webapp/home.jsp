@@ -9,7 +9,13 @@
     <style>
         .hero-img { width:100%; max-width:500px; height:320px; object-fit:cover; }
         .product-card img { width:100%; height:180px; object-fit:cover; }
-        .news-card img { width:100%; height:140px; object-fit:cover; }
+        /* Xử lý hình ảnh tin tức để luôn có cùng kích thước */
+        img.news-card, .card-img-top.news-card {
+            width:100%;
+            height:250px;
+            object-fit:cover; /* Giữ tỉ lệ và cắt nếu cần */
+            display:block;
+        }
         /* Section separator with subtle gradient/shadow effect */
         .section-sep {
             height:4px;

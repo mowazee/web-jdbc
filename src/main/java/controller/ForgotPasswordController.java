@@ -12,7 +12,7 @@ import service.IUserService;
 import utils.MailUtil;
 
 @WebServlet(urlPatterns = "/forgotpassword")
-public class ForgotPassword extends HttpServlet {
+public class ForgotPasswordController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     @Override

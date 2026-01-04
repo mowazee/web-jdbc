@@ -81,7 +81,6 @@ public class CategoryAdminController extends HttpServlet {
             // Quick non-multipart delete handling: check request parameter directly before multipart parsing.
             String quickAction = req.getParameter("action");
             if ("delete".equals(quickAction)) {
-                System.out.println("[CategoryAdminController] quick delete detected via request param");
                 String idParam = req.getParameter("id");
                 if (idParam == null || idParam.trim().isEmpty()) {
                     resp.sendError(HttpServletResponse.SC_BAD_REQUEST);

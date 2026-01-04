@@ -55,9 +55,9 @@
                                     <c:set var="catLink" value="${pageContext.request.contextPath}/products/category?cateid=${cat.cateid}" />
                                     <a href="${catLink}" class="list-group-item list-group-item-action ${cat.cateid == currentId ? 'active' : ''}">
                                         <div class="d-flex align-items-center">
-                                            <c:if test="${not empty cat.icon}">
-                                                <img src="${pageContext.request.contextPath}/image/${cat.icon}" alt="icon-${cat.cateid}" style="width:40px;height:40px;object-fit:cover;border-radius:4px;margin-right:8px;" />
-                                            </c:if>
+<%--                                             <c:if test="${not empty cat.icon}"> --%>
+<%--                                                 <img src="${pageContext.request.contextPath}/${cat.icon}" alt="icon-${cat.cateid}" style="width:40px;height:40px;object-fit:cover;border-radius:4px;margin-right:8px;" /> --%>
+<%--                                             </c:if> --%>
                                             <div>
                                                 <div class="fw-bold">${cat.catename}</div>
                                             </div>
