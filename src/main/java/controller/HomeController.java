@@ -38,8 +38,8 @@ protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws Se
         case "/profile":
             req.getRequestDispatcher("/views/client/user-profile.jsp").forward(req, resp);
             break;
-        case "/home":
-        case "/index":
+//        case "/home":
+//        case "/index":
         default:
             try {
                 // Fetch a few products to show on homepage (limit 4 to fill a 4-col row; controller can limit to 3 if desired)
