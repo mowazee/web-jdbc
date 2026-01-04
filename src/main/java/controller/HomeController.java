@@ -12,7 +12,7 @@ import model.ProductModel;
 import model.NewModel;
 import service.IProductService;
 import service.INewService;
-import service.impl.ProductServiceImpl;
+import service.impl.ProductServiceImpl; 
 import service.impl.NewServiceImpl;
 
 @WebServlet(urlPatterns = {"/home", "/index", "/about", "/contact", "/profile"})

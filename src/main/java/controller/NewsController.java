@@ -11,7 +11,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import model.NewModel;
 import service.INewService;
 import service.impl.NewServiceImpl;
-
 @WebServlet(urlPatterns = {"/news", "/news/*"})
 public class NewsController extends HttpServlet {
     private static final long serialVersionUID = 1L;

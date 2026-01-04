@@ -18,7 +18,7 @@ import model.UserModel;
 import service.IOrderService;
 import service.IProductService;
 import service.impl.OrderServiceImpl;
-import service.impl.ProductServiceImpl;
+import service.impl.ProductServiceImpl;  
 
 @WebServlet(urlPatterns = {"/checkout"})
 public class CheckoutController extends HttpServlet {

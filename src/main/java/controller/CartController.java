@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.CartItemModel;
-import model.CartModel;
+import model.CartModel; 
 import model.ProductModel;
 import service.IProductService;
 import service.impl.ProductServiceImpl;

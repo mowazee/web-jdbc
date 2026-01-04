@@ -12,7 +12,6 @@ import model.UserModel;
 import service.IUserService;
 import service.impl.UserServiceImpl;
 import org.mindrot.jbcrypt.BCrypt;
-
 @WebServlet(urlPatterns = {"/login"})
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;

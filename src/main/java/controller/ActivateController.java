@@ -9,8 +9,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import service.IUserService;
 import service.impl.UserServiceImpl;
 
-@WebServlet(urlPatterns = "/activate")
-public class ActivateController extends HttpServlet {
+@WebServlet(urlPatterns = "/activate") 
+public class ActivateController extends HttpServlet  {
     private static final long serialVersionUID = 1L;
 
     @Override

@@ -7,7 +7,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.UserModel;
-
 @SuppressWarnings("serial")
 @WebServlet(urlPatterns = "/waiting")
 public class WaitingController extends HttpServlet {
