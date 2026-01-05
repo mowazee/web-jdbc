@@ -7,7 +7,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
 import model.UserModel;
 import service.IUserService;
 import service.impl.UserServiceImpl;
@@ -49,7 +48,6 @@ public class LoginController extends HttpServlet {
 		if (next != null) req.setAttribute("next", next);
 		req.getRequestDispatcher("/views/auth/login.jsp").forward(req, resp);
 	}
-
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("text/html");
@@ -76,7 +74,6 @@ public class LoginController extends HttpServlet {
 				// store both username string for legacy checks and full user object
 				session.setAttribute("username", user.getUsername());
 				session.setAttribute("user", user);
-
 				// handle remember me
 				if ("on".equals(remember)) {
 					Cookie cookie = new Cookie("username", user.getUsername());
@@ -84,7 +81,6 @@ public class LoginController extends HttpServlet {
 					cookie.setMaxAge(7 * 24 * 60 * 60); // 7 days
 					resp.addCookie(cookie);
 				}
-
 				// if next param provided, validate and redirect to it; otherwise go to waiting
 				if (next != null && !next.isEmpty()) {
 					// basic safety check: disallow external URLs

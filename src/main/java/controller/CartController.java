@@ -1,13 +1,10 @@
 package controller;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 import java.net.URLEncoder;
-
 import com.google.gson.Gson;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -30,7 +27,6 @@ public class CartController extends HttpServlet {
         String xhr = req.getHeader("X-Requested-With");
         return "XMLHttpRequest".equalsIgnoreCase(xhr);
     }
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String path = req.getServletPath();
@@ -41,7 +37,6 @@ public class CartController extends HttpServlet {
                 cart = new CartModel();
                 session.setAttribute("cart", cart);
             }
-
             switch (path) {
             case "/cart/add":
                 addToCart(req, resp, cart);
@@ -68,14 +63,12 @@ public class CartController extends HttpServlet {
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
-
     private void writeJson(HttpServletResponse resp, Object obj) throws IOException {
         resp.setContentType("application/json;charset=UTF-8");
         try (PrintWriter out = resp.getWriter()) {
             out.print(gson.toJson(obj));
         }
     }
-
     private void writeCartJson(HttpServletResponse resp, CartModel cart) throws IOException {
         Map<String, Object> data = new HashMap<>();
         data.put("totalQuantity", cart.getTotalQuantity());
@@ -91,7 +84,6 @@ public class CartController extends HttpServlet {
         data.put("items", itemsMap);
         writeJson(resp, data);
     }
-
     private void addToCart(HttpServletRequest req, HttpServletResponse resp, CartModel cart) throws Exception {
         // require login: user object stored in session under "user"
         HttpSession sessionCheck = req.getSession(false);
@@ -198,7 +190,6 @@ public class CartController extends HttpServlet {
             resp.sendRedirect(req.getContextPath() + "/cart");
         }
     }
-
     private void updateCartQuantity(HttpServletRequest req, HttpServletResponse resp, CartModel cart) throws IOException {
         String idStr = req.getParameter("id");
         String qtyStr = req.getParameter("qty");

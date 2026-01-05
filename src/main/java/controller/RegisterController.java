@@ -15,13 +15,11 @@ import model.UserModel;
 import service.IUserService;
 import service.impl.UserServiceImpl;
 import utils.MailUtil;
-
 @WebServlet(urlPatterns ="/register")
 public class RegisterController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	// simple email regex: allow common email formats
 	private static final Pattern EMAIL_PATTERN = Pattern.compile("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$");
-
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession(false);// request
@@ -53,7 +51,6 @@ public class RegisterController extends HttpServlet {
 		String fullname = req.getParameter("fullname");
 		String phone = req.getParameter("phone");
 		String address = req.getParameter("address");
-
 		String alertMsg = null;
 		// basic server-side validation
 		if (username == null || username.trim().isEmpty() || password == null || password.trim().isEmpty() ||
@@ -63,10 +60,8 @@ public class RegisterController extends HttpServlet {
 			req.getRequestDispatcher("/views/auth/register.jsp").forward(req, resp);
 			return;
 		}
-
 		// normalize email
 		email = email.trim().toLowerCase();
-
 		// validate email format
 		Matcher m = EMAIL_PATTERN.matcher(email);
 		if (!m.matches()) {
@@ -87,7 +82,6 @@ public class RegisterController extends HttpServlet {
 			req.getRequestDispatcher("/views/auth/register.jsp").forward(req, resp);
 			return;
 		}
-
 		IUserService userService = new UserServiceImpl();
 		try {
 			if (userService.checkExistEmail(email)) {
@@ -108,7 +102,6 @@ public class RegisterController extends HttpServlet {
 				req.getRequestDispatcher("/views/auth/register.jsp").forward(req, resp);
 				return;
 			}
-
 			int roleid = 2; // default regular user
 			Date createdate = new Date(System.currentTimeMillis());
 			// create activation token

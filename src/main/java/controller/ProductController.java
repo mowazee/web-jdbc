@@ -1,5 +1,4 @@
 package controller;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -15,24 +14,20 @@ import service.ICategoryService;
 import service.IProductService;
 import service.impl.CategoryServiceImpl;
 import service.impl.ProductServiceImpl;
-
 @WebServlet(urlPatterns = { "/products", "/product", "/products/special" })
 public class ProductController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private IProductService productService = new ProductServiceImpl();
     private ICategoryService categoryService = new CategoryServiceImpl();
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             req.setCharacterEncoding("UTF-8");
             resp.setCharacterEncoding("UTF-8");
-
             String q = req.getParameter("q");
             String cateIdStr = req.getParameter("id");
             String pageStr = req.getParameter("page");
             String pageSizeStr = req.getParameter("pageSize");
-
             int page = 1;
             int pageSize = 12; // default items per page
             try {
@@ -41,7 +36,6 @@ public class ProductController extends HttpServlet {
             } catch (NumberFormatException ex) {
                 page = 1;
             }
-
             // validate pageSize (allow common sizes)
             try {
                 if (pageSizeStr != null) {
@@ -51,9 +45,7 @@ public class ProductController extends HttpServlet {
             } catch (NumberFormatException ex) {
                 pageSize = 12;
             }
-
             int offset = (page - 1) * pageSize;
-
             List<ProductModel> products;
             int totalResults = 0;
             if (q != null && !q.trim().isEmpty()) {
@@ -89,18 +81,15 @@ public class ProductController extends HttpServlet {
                     }
                 }
             }
-
             int totalPages = (int) Math.ceil((double) totalResults / pageSize);
             if (totalPages == 0)
                 totalPages = 1;
-
             req.setAttribute("products", products);
             req.setAttribute("categoryMap", categoryMap);
             req.setAttribute("currentPage", page);
             req.setAttribute("totalPages", totalPages);
             req.setAttribute("totalResults", totalResults);
             req.setAttribute("pageSize", pageSize);
-
             req.getRequestDispatcher("/views/client/product-list.jsp").forward(req, resp);
         } catch (Exception e) {
             e.printStackTrace();

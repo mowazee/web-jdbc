@@ -1,8 +1,6 @@
 package controller;
-
 import java.io.IOException;
 import java.sql.Date;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -19,18 +17,15 @@ import service.IOrderService;
 import service.IProductService;
 import service.impl.OrderServiceImpl;
 import service.impl.ProductServiceImpl;  
-
 @WebServlet(urlPatterns = {"/checkout"})
 public class CheckoutController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private IOrderService orderService = new OrderServiceImpl();
     private IProductService productService = new ProductServiceImpl();
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("/views/client/checkout.jsp").forward(req, resp);
     }
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(false);
@@ -44,7 +39,6 @@ public class CheckoutController extends HttpServlet {
             req.getRequestDispatcher("/views/client/checkout.jsp").forward(req, resp);
             return;
         }
-
         // server-side validation for recipient info
         String recipientName = req.getParameter("recipientName");
         String recipientPhone = req.getParameter("recipientPhone");
@@ -54,10 +48,8 @@ public class CheckoutController extends HttpServlet {
             req.getRequestDispatcher("/views/client/checkout.jsp").forward(req, resp);
             return;
         }
-
         UserModel user = (UserModel) session.getAttribute("user");
         int userId = user != null ? user.getId() : 0; // guest user id 0
-
         try {
             OrderModel order = new OrderModel();
             order.setUserid(userId);
@@ -77,7 +69,6 @@ public class CheckoutController extends HttpServlet {
                 oit.setQuantity(it.getQuantity());
                 order.addItem(oit);
             }
-
             int orderId = orderService.save(order);
             if (orderId > 0) {
                 // decrement product stock

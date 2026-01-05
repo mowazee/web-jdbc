@@ -1,8 +1,6 @@
 package controller;
-
 import java.io.IOException;
 import java.util.List;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -15,7 +13,6 @@ import service.impl.NewServiceImpl;
 public class NewsController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private INewService newService = new NewServiceImpl();
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
@@ -43,9 +40,7 @@ public class NewsController extends HttpServlet {
                 int fromIndex = (page - 1) * size;
                 int toIndex = Math.min(fromIndex + size, totalItems);
                 List<NewModel> pageList = (list == null || list.isEmpty()) ? java.util.Collections.emptyList() : list.subList(fromIndex, toIndex);
-
                 List<NewModel> topViewed = newService.findTopViewed(5);
-
                 req.setAttribute("newsList", pageList);
                 req.setAttribute("topViewed", topViewed);
                 req.setAttribute("currentPage", page);
@@ -76,7 +71,6 @@ public class NewsController extends HttpServlet {
             resp.sendRedirect(req.getContextPath() + "/web404");
         }
     }
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doGet(req, resp);

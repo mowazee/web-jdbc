@@ -1,5 +1,4 @@
 package controller;
-
 import java.io.IOException;
 import java.sql.Timestamp;
 import jakarta.servlet.ServletException;
@@ -10,11 +9,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import model.UserModel;
 import service.IUserService;
 import service.impl.UserServiceImpl;
-
 @WebServlet(urlPatterns = "/resetpassword")
 public class ResetPasswordController extends HttpServlet {
     private static final long serialVersionUID = 1L;
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String token = req.getParameter("token");
@@ -47,7 +44,6 @@ public class ResetPasswordController extends HttpServlet {
             req.getRequestDispatcher("/views/client/register-succes.jsp").forward(req, resp);
         }
     }
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");

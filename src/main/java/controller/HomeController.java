@@ -1,8 +1,6 @@
 package controller;
-
 import java.io.IOException;
 import java.util.List;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -14,7 +12,6 @@ import service.IProductService;
 import service.INewService;
 import service.impl.ProductServiceImpl; 
 import service.impl.NewServiceImpl;
-
 @WebServlet(urlPatterns = {"/home", "/index", "/about", "/contact", "/profile"})
 public class HomeController extends HttpServlet {
 private static final long serialVersionUID = 1L;

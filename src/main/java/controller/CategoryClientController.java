@@ -1,8 +1,6 @@
 package controller;
-
 import java.io.IOException;
 import java.util.List;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -12,12 +10,10 @@ import model.CategoryModel;
 import model.ProductModel;
 import service.IProductService;
 import service.impl.ProductServiceImpl;
-
 @WebServlet(urlPatterns = { "/categories", "/category", "/products/category" })
 public class CategoryClientController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private IProductService productService = new ProductServiceImpl();
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
@@ -33,7 +29,6 @@ public class CategoryClientController extends HttpServlet {
                     cateid = 0;
                 }
             }
-
             // pagination params
             String pageStr = req.getParameter("page");
             String pageSizeStr = req.getParameter("pageSize");
@@ -59,7 +54,6 @@ public class CategoryClientController extends HttpServlet {
                     }
                 }
             }
-
             List<ProductModel> products;
             int totalResults = 0;
             if (cateid > 0) {
@@ -68,17 +62,14 @@ public class CategoryClientController extends HttpServlet {
             } else {
                 products = java.util.Collections.emptyList();
             }
-
             int totalPages = (int) Math.ceil((double) totalResults / pageSize);
             if (totalPages == 0) totalPages = 1;
-
             req.setAttribute("products", products);
             req.setAttribute("currentCategoryId", cateid);
             req.setAttribute("currentPage", page);
             req.setAttribute("pageSize", pageSize);
             req.setAttribute("totalPages", totalPages);
             req.setAttribute("totalResults", totalResults);
-
             req.getRequestDispatcher("/views/client/list-category.jsp").forward(req, resp);
         } catch (Exception e) {
             e.printStackTrace();
