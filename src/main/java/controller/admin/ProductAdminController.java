@@ -19,6 +19,7 @@ import service.ICategoryService;
 import service.IProductService;
 import service.impl.CategoryServiceImpl;
 import service.impl.ProductServiceImpl;
+import utils.Constant; // added import
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, // 1MB
         maxFileSize = 5 * 1024 * 1024, // 5MB
@@ -88,13 +89,33 @@ public class ProductAdminController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
 
-        // Quick non-multipart delete handling
+        // Quick non-multipart delete handling - now also remove physical files
         String quickAction = req.getParameter("action");
         if ("delete".equals(quickAction)) {
             try {
                 String idStr = req.getParameter("id");
                 if (idStr != null && !idStr.isEmpty()) {
                     int id = Integer.parseInt(idStr);
+                    ProductModel existing = productService.findById(id);
+                    if (existing != null) {
+                        // delete physical files from configured DIR and deployed webapp image folder
+                        try {
+                            String uploadDirPath = Constant.DIR + File.separator + "products";
+                            File uploadDir = new File(uploadDirPath);
+                            String deployedImageRealPath = req.getServletContext().getRealPath("/image/products");
+                            File deployedImageDir = (deployedImageRealPath != null && !deployedImageRealPath.trim().isEmpty()) ? new File(deployedImageRealPath) : null;
+                            if (existing.getImage() != null && !existing.getImage().trim().isEmpty()) {
+                                String imgName = existing.getImage();
+                                if (imgName.contains("/")) imgName = imgName.substring(imgName.lastIndexOf('/') + 1);
+                                File f = new File(uploadDir, imgName);
+                                try { if (f.exists() && f.isFile()) f.delete(); } catch (Exception exx) { exx.printStackTrace(); }
+                                if (deployedImageDir != null) {
+                                    File df = new File(deployedImageDir, imgName);
+                                    try { if (df.exists() && df.isFile()) df.delete(); } catch (Exception exx) { exx.printStackTrace(); }
+                                }
+                            }
+                        } catch (Exception deleteEx) { deleteEx.printStackTrace(); }
+                    }
                     productService.delete(id);
                     req.getSession().setAttribute("message", "Xóa thành công");
                 }
@@ -175,8 +196,24 @@ public class ProductAdminController extends HttpServlet {
                 int id = Integer.parseInt(idStr);
                 product.setId(id);
                 if (filePart != null && filePart.getSize() > 0) {
+                    // save new file
                     String imagePath = saveUploadedFile(filePart, req);
                     product.setImage(imagePath);
+                    // delete old file
+                    ProductModel existing = productService.findById(id);
+                    if (existing != null && existing.getImage() != null && !existing.getImage().trim().isEmpty()) {
+                        try {
+                            String old = existing.getImage();
+                            String oldName = old.contains("/") ? old.substring(old.lastIndexOf('/') + 1) : old;
+                            File oldFile = new File(Constant.DIR + File.separator + "products", oldName);
+                            try { if (oldFile.exists() && oldFile.isFile()) oldFile.delete(); } catch (Exception exx) { exx.printStackTrace(); }
+                            String deployedImageRealPath = req.getServletContext().getRealPath("/image/products");
+                            if (deployedImageRealPath != null && !deployedImageRealPath.trim().isEmpty()) {
+                                File df = new File(deployedImageRealPath, oldName);
+                                try { if (df.exists() && df.isFile()) df.delete(); } catch (Exception exx) { exx.printStackTrace(); }
+                            }
+                        } catch (Exception exx) { exx.printStackTrace(); }
+                    }
                 } else {
                     ProductModel existing = productService.findById(id);
                     if (existing != null) product.setImage(existing.getImage());
@@ -214,14 +251,24 @@ public class ProductAdminController extends HttpServlet {
         int idx = submitted.lastIndexOf('.');
         if (idx > 0) ext = submitted.substring(idx);
         String fileName = System.currentTimeMillis() + ext;
-        String uploadDir = req.getServletContext().getRealPath("/image/products");
+        // Save to project images dir (Constant.DIR) so files persist between redeploys
+        String uploadDir = Constant.DIR + File.separator + "products";
         File uploadDirFile = new File(uploadDir);
         if (!uploadDirFile.exists()) uploadDirFile.mkdirs();
         File file = new File(uploadDirFile, fileName);
         try (InputStream in = filePart.getInputStream()) {
             Files.copy(in, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
         }
-        // return web path relative to context
+        // Also ensure copied to deployed webapp image folder for immediate serving
+        String deployedImageRealPath = req.getServletContext().getRealPath("/image/products");
+        if (deployedImageRealPath != null && !deployedImageRealPath.trim().isEmpty()) {
+            File deployedImageDir = new File(deployedImageRealPath);
+            if (!deployedImageDir.exists()) deployedImageDir.mkdirs();
+            try {
+                Files.copy(file.toPath(), new File(deployedImageDir, fileName).toPath(), StandardCopyOption.REPLACE_EXISTING);
+            } catch (Exception ex) { ex.printStackTrace(); }
+        }
+        // return relative path used by views
         return "image/products/" + fileName;
     }
 
@@ -231,7 +278,11 @@ public class ProductAdminController extends HttpServlet {
         for (String cd : header.split(";")) {
             if (cd.trim().startsWith("filename")) {
                 String fileName = cd.substring(cd.indexOf('=') + 1).trim().replace("\"", "");
-                return fileName.substring(fileName.lastIndexOf(File.separator) + 1);
+                // some browsers (IE) send the full path, normalize separators and take last segment
+                fileName = fileName.replace('\\', '/');
+                int idx = fileName.lastIndexOf('/');
+                if (idx >= 0) fileName = fileName.substring(idx + 1);
+                return fileName;
             }
         }
         return null;

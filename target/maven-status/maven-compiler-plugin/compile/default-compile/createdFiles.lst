@@ -55,7 +55,6 @@ controller\ProductController.class
 dao\IOrderDAO.class
 service\IProductService.class
 model\CategoryModel.class
-controller\ForgotPassword.class
 dao\impl\NewDAOImpl.class
 service\impl\ReportServiceImpl.class
 controller\admin\ProductAdminController.class

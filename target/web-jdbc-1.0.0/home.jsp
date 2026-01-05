@@ -9,7 +9,13 @@
     <style>
         .hero-img { width:100%; max-width:500px; height:320px; object-fit:cover; }
         .product-card img { width:100%; height:180px; object-fit:cover; }
-        .news-card img { width:100%; height:140px; object-fit:cover; }
+        /* Xử lý hình ảnh tin tức để luôn có cùng kích thước */
+        img.news-card, .card-img-top.news-card {
+            width:100%;
+            height:250px;
+            object-fit:cover; /* Giữ tỉ lệ và cắt nếu cần */
+            display:block;
+        }
         /* Section separator with subtle gradient/shadow effect */
         .section-sep {
             height:4px;
@@ -31,7 +37,7 @@
     <!-- Block 1: Intro (image left, text right) -->
     <div class="row align-items-center mb-5">
         <div class="col-md-6">
-            <img src="${pageContext.request.contextPath}/static/placeholder-hero.jpg" alt="Hero" class="hero-img rounded shadow-sm">
+            <img src="${pageContext.request.contextPath}/common/image/profile-cong-ty.jpg" alt="Hero" class="hero-img rounded shadow-sm">
         </div>
         <div class="col-md-6">
             <h2>Giới thiệu về doanh nghiệp</h2>
@@ -130,11 +136,10 @@
         </div>
         <div class="col-12">
             <div class="partners-row">
-                <div class="partner-item"><img src="${pageContext.request.contextPath}/static/placeholder-250x150.png" alt="partner-1"></div>
-                <div class="partner-item"><img src="${pageContext.request.contextPath}/static/placeholder-250x150.png" alt="partner-2"></div>
-                <div class="partner-item"><img src="${pageContext.request.contextPath}/static/placeholder-250x150.png" alt="partner-3"></div>
-                <div class="partner-item"><img src="${pageContext.request.contextPath}/static/placeholder-250x150.png" alt="partner-4"></div>
-                <div class="partner-item"><img src="${pageContext.request.contextPath}/static/placeholder-250x150.png" alt="partner-5"></div>
+                <div class="partner-item"><img src="${pageContext.request.contextPath}/common/image/doi-tac1.jpg" alt="partner-1"></div>
+                <div class="partner-item"><img src="${pageContext.request.contextPath}/common/image/doi-tac2.png" alt="partner-2"></div>
+                <div class="partner-item"><img src="${pageContext.request.contextPath}/common/image/doi-tac3.jpg" alt="partner-3"></div>
+                <div class="partner-item"><img src="${pageContext.request.contextPath}/common/image/doi-tac4.png" alt="partner-4"></div>
             </div>
         </div>
     </div>
